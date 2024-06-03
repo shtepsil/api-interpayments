@@ -45,3 +45,5 @@ phpunit.phar
 /z-notices
 *.zip
 *.rar
+
+/test
