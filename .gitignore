@@ -43,5 +43,5 @@ phpunit.phar
 /backend/web/robots.txt
 
 /z-notices
-/.zip
-/.rar
+*.zip
+*.rar
