@@ -9,9 +9,12 @@ $params = array_merge(
 return [
     'id' => 'app-api',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'debugger'],
     'controllerNamespace' => 'api\controllers',
     'components' => [
+        'debugger' => [
+            'class' => \common\components\Debugger::class,
+        ],
         'request' => [
             'csrfParam' => '_csrf-api',
             'baseUrl' => '/api',

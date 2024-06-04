@@ -18,14 +18,15 @@ class Debugger
 
     public function __construct()
     {
-        if(defined ('DEBUG_DETECT') AND DEBUG_DETECT){
+        if (defined ('DEBUG_DETECT') AND DEBUG_DETECT) {
             /*
              * Все сайты, которые есть в массиве $debug_sites_allowed,
              * будут отображать debug скрипты,
              * если DEBUG_IP_DETECT пустая строка.
              */
             $debug_sites_allowed = [
-                'test.interpayments.ru'
+                'test.interpayments.ru',
+                'api-interpayments',
             ];
 
             /*
@@ -35,14 +36,14 @@ class Debugger
              * если сайт находится на kingfisher.kz и нужно использовать debug по IP,
              * то эту строку нужно закомментировать.
              */
-            if(
+            if (
                 defined ('DEBUG_IP_DETECT')
                 AND (DEBUG_IP_DETECT != '' OR $_SERVER['REMOTE_ADDR'] == '127.0.0.1')
                 AND !is_bool(DEBUG_IP_DETECT)
                 AND DEBUG_IP_DETECT !== 0 AND DEBUG_IP_DETECT !== 1
                 AND ($_SERVER['REMOTE_ADDR'] == '127.0.0.1' OR $_SERVER['REMOTE_ADDR'] == DEBUG_IP_DETECT)
                 AND (!in_array($_SERVER['SERVER_NAME'], ['interpayments.ru']) OR DEBUG_KINGFISHER_DETECT)
-            ){
+            ) {
                 /*
                  * Если DEBUG_IP_DETECT задан как пустая строка и это локальный IP,
                  * то нужно чтобы DEBUG_IP_DETECT работал на локалке, а для этого он не должен быть пустым,
@@ -51,33 +52,33 @@ class Debugger
                  * В общем если DEBUG_IP_DETECT пустая строка - то на локалке всё должно работать.
                  * А иначе, значение для $this->ip_debug_detect, берём из DEBUG_IP_DETECT.
                  */
-                if(DEBUG_IP_DETECT == '' AND $_SERVER['REMOTE_ADDR'] == '127.0.0.1'){
+                if (DEBUG_IP_DETECT == '' AND $_SERVER['REMOTE_ADDR'] == '127.0.0.1') {
                     $this->ip_debug_detect = 1;
-                }else{
+                } else {
                     $this->ip_debug_detect = DEBUG_IP_DETECT;
                 }
-            }else{
+            } else {
                 /*
                  * Если DEBUG_IP_DETECT пуст и это не локальный сервер, то
                  * debug скрипты будут работать на всех сайтах, указанных в массиве $debug_sites_allowed,
                  * кроме kingfisher.kz
                  */
-                if(
+                if (
                     in_array($_SERVER['SERVER_NAME'], $debug_sites_allowed)
                     AND $_SERVER['SERVER_NAME'] != 'interpayments.ru'
-                ){
+                ) {
                     $this->ip_debug_detect = 1;
                 }
             }
 
             // Принудительное включение debug скриптов
-            if(
+            if (
                 defined ('DEBUG_DETECT_ALL')
                 AND (
                     (is_bool(DEBUG_DETECT_ALL) AND DEBUG_DETECT_ALL)
                     OR (DEBUG_DETECT_ALL == 1)
                 )
-            ){
+            ) {
                 $this->ip_debug_detect = DEBUG_DETECT_ALL;
             }
         }
