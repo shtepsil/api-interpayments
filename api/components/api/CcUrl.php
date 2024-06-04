@@ -3,6 +3,7 @@
 namespace api\components\api;
 
 use common\components\Debugger as d;
+use shadow\helpers\Json;
 
 class CcUrl
 {
@@ -82,7 +83,7 @@ class CcUrl
         if(d::$get_data) d::pe($data);
         if(d::$get_url) d::pe($api_endpoint);
 
-        $d['data'] = $data;
+        $d['data'] = (Json::isJson($data)) ? json_decode($data) : $data;
         $d['method'] = $method;
         $debug['info'][] = 'Метод: ' . $method;
         $d['api_endpoint'] = $api_endpoint;
