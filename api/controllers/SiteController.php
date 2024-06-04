@@ -16,6 +16,7 @@ class SiteController extends MainController
     public function actionIndex()
     {
         $api = new Api();
+        d::$view_response = true;
         $res = $api->testRequest();
         return $res;
 //        return ['SiteController' => 'actionIndex'];

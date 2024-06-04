@@ -36,15 +36,15 @@ class ApiBase
 
 //        $arr_response = json_decode($response, true);
 
-        if(d::isJson($response['data'])){
-            $arr_response = json_decode($response['data'], true);
-        }else{
-            $arr_response = $response['data'];
-        }
+//        if(d::isJson($response['data'])){
+//            $arr_response = json_decode($response['data'], true);
+//        }else{
+//            $arr_response = $response['data'];
+//        }
 
-        if(!is_array($arr_response)){
-            $arr_response = [ 'response' => $arr_response ];
-        }
+//        if(!is_array($arr_response)){
+//            $arr_response = [ 'response' => $arr_response ];
+//        }
 
         if(d::$view_response) {
             $arr_response['endpoint'] = $response['endpoint'];

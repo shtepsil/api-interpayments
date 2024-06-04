@@ -18,7 +18,10 @@ class CcUrl
 
         $api_endpoint = $this->base_url.$endpoint;
         $d = [];
-        $debug = [ 'info' => [] ];
+        $debug = [
+            'request' => [],
+            'response' => [],
+        ];
         $data = null;
 
 //        d::ajax($api_endpoint);
@@ -43,6 +46,8 @@ class CcUrl
         if(count($headers)){
             curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         }
+
+        $debug['request']['headers'] = $headers;
 
         unset($options['url_items']);
         unset($options['headers']);
@@ -85,7 +90,8 @@ class CcUrl
 
         $d['data'] = (Json::isJson($data)) ? json_decode($data) : $data;
         $d['method'] = $method;
-        $debug['info'][] = 'Метод: ' . $method;
+        $debug['request']['body'] = (Json::isJson($data)) ? json_decode($data) : $data;
+        $debug['request']['method'] = 'Метод: ' . $method;
         $d['api_endpoint'] = $api_endpoint;
         if(d::$curl) d::ajax($d);
 
@@ -94,12 +100,13 @@ class CcUrl
         $http_status_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
 
-        $debug['info'][] = $response;
+//        $debug['response']['data'] = $response;
 
 //        d::ajax($response);
 
         $curlinfo_response = $this->getHeaders($response);
-        $debug['headers'] = $curlinfo_response;
+        $debug['response']['headers'] = $curlinfo_response['info'];
+        $debug['response']['body'] = Json::isJson($curlinfo_response['body']) ? Json::decode($curlinfo_response['body']) : $curlinfo_response['body'];
         $cookies = $this->getCookie($curlinfo_response['info']);
         $debug['cookie'] = $cookies;
         if(isset($cookies['front_s']) AND isset($_SESSION['codelogin'])){
