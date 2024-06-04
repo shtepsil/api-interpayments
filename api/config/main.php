@@ -15,6 +15,17 @@ return [
         'debugger' => [
             'class' => \common\components\Debugger::class,
         ],
+        'response' => [
+            // ...
+            'formatters' => [
+                \yii\web\Response::FORMAT_JSON => [
+                    'class' => 'yii\web\JsonResponseFormatter',
+                    'prettyPrint' => YII_DEBUG, // используем "pretty" в режиме отладки
+                    'encodeOptions' => JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE,
+                    // ...
+                ],
+            ],
+        ],
         'request' => [
             'csrfParam' => '_csrf-api',
             'baseUrl' => '/api',
