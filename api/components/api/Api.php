@@ -40,8 +40,8 @@ class Api extends ApiBase
                 'token:  c4ZqQi8pMhJwO1nXbtxrEQ2D5025Nr1zO9umtuDuzmUxPFvQaR'
             ],
             'service_id' => 92,
-            'account' =>  '550831976',
-            'agent_transaction_id' => '637553186520953102',
+            'account' =>  'igromen4g',
+            'agent_transaction_id' => '54046441',
             'amount' => 1000,
             'params' => []
         ];
