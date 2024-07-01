@@ -31,9 +31,10 @@ if(isset($form_options)){
     ]); ?>
     <?= Html::hiddenInput('id', $item->id) ?>
     <div style="position: relative;">
-        <div class="form-actions panel-footer" style="padding-left: 0px;padding-top: 0px;">
-            <?= Html::submitButton('<i class="fa fa-retweet"></i> Сохранить', ['class' => 'btn-success btn-save btn-lg btn', 'data-hotkeys' => 'ctrl+s', 'name' => 'continue']) ?>
-            <?php if (isset($cancel)): ?>
+        <div class="form-actions" style="padding-left: 0px;padding-top: 0px;">
+            <?= Html::submitButton('<i class="fa fa-retweet"></i> Сохранить', ['class' => 'btn btn-success btn-save', 'data-hotkeys' => 'ctrl+s', 'name' => 'continue']) ?>
+            <?php // if (isset($cancel)): ?>
+            <?php if (0): ?>
                 &nbsp;&nbsp;
                 <button name="commit" type="submit" class="btn-save-close btn-default hidden-xs btn" onclick="$(this).val(1)">
                     <i class="fa fa-check"></i> Сохранить и Закрыть
@@ -43,87 +44,90 @@ if(isset($form_options)){
                     <i class="fa fa-ban"></i> <span class="hidden-xs hidden-sm">Отмена</span></a>
             <?php endif; ?>
         </div>
-        <?php if (isset($groups) && $groups): ?>
-            <?php
-            $i_li = 0;
-            $this->registerJs(<<<JS
-function params_unserialize(p) {
-    p = p.substr(1);
-    var ret = {},
-        seg = p.replace(/^\?/, '').split('&'),
-        len = seg.length, i = 0, s;
-    for (; i < len; i++) {
-        if (!seg[i]) {
-            continue;
+        <div class="tab-struct custom-tab-2 mt-40">
+            <?php if (isset($groups) && $groups): ?>
+                <?php
+                $i_li = 0;
+                $this->registerJs(<<<JS
+    function params_unserialize(p) {
+        p = p.substr(1);
+        var ret = {},
+            seg = p.replace(/^\?/, '').split('&'),
+            len = seg.length, i = 0, s;
+        for (; i < len; i++) {
+            if (!seg[i]) {
+                continue;
+            }
+            s = seg[i].split('=');
+            ret[s[0]] = s[1];
         }
-        s = seg[i].split('=');
-        ret[s[0]] = s[1];
+        return ret;
     }
-    return ret;
-}
-if (location.hash !== '') {
-    var hash = location.hash;
-    if(hash){
-        var hashs = params_unserialize(hash);
-        if (hashs['tab']) {
-            var obj=$('a[href="#' + hashs['tab'] + '"]');
-            if($(obj).is(':visible')){
-                $(obj).tab('show');
+    if (location.hash !== '') {
+        var hash = location.hash;
+        if(hash){
+            var hashs = params_unserialize(hash);
+            if (hashs['tab']) {
+                var obj=$('a[href="#' + hashs['tab'] + '"]');
+                if($(obj).is(':visible')){
+                    $(obj).tab('show');
+                }
             }
         }
     }
-}
-$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-    if (location.hash) {
-        //location.hash = 'tab=' + $(e.target).attr('href').substr(1);
-        var hash = location.hash;
-        var hashs = params_unserialize(hash);
-        hashs['tab'] = $(e.target).attr('href').substr(1);
-        location.hash= $.param(hashs);
-    } else {
-        location.hash = 'tab=' + $(e.target).attr('href').substr(1);
-    }
-});
-JS
-            );
-            ?>
-            <?= Html::ul($groups,
-                [
-                    'class' => 'nav nav-tabs tabs-generated',
-                    'item' => function ($item, $index) use (&$i_li) {
-                        $context = $items_count = '';
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        if (location.hash) {
+            //location.hash = 'tab=' + $(e.target).attr('href').substr(1);
+            var hash = location.hash;
+            var hashs = params_unserialize(hash);
+            hashs['tab'] = $(e.target).attr('href').substr(1);
+            location.hash= $.param(hashs);
+        } else {
+            location.hash = 'tab=' + $(e.target).attr('href').substr(1);
+        }
+    });
+    JS
+                );
+                ?>
+                <?= Html::ul($groups,
+                    [
+                        'role' => 'tablist',
+                        'class' => 'nav nav-tabs',
+                        'item' => function ($item, $index) use (&$i_li) {
+                            $context = $items_count = '';
 
-                        if(isset($item['context'])){
-                            /*
-                             * getUserChildren - не правильно это тут делать так.
-                             * Потому что тут должны быть общие скрипты, а не частные.
-                             * Но пусть будет пока так.
-                             * Если и вызывать тут подобный метод, то он должен быть
-                             * для всех моделей одинаковым, но со своими настройками из FormParams.
-                             * В общем надо будет потом тут это продумать.
-                             */
-                            $items_count = ' (' . (($item['context']->getUserChildren(true)) ?: '0') . ')';
-                        }
+                            if(isset($item['context'])){
+                                /*
+                                 * getUserChildren - не правильно это тут делать так.
+                                 * Потому что тут должны быть общие скрипты, а не частные.
+                                 * Но пусть будет пока так.
+                                 * Если и вызывать тут подобный метод, то он должен быть
+                                 * для всех моделей одинаковым, но со своими настройками из FormParams.
+                                 * В общем надо будет потом тут это продумать.
+                                 */
+                                $items_count = ' (' . (($item['context']->getUserChildren(true)) ?: '0') . ')';
+                            }
 
-                        $options = ['id' => "page-$index-panel-li"];
-                        if (isset($item['icon']) && $item['icon']) {
-                            $context = "<i class=\"fa fa-{$item['icon']}\"></i> ";
+                            $options = ['role' => 'presentation'];
+                            if (isset($item['icon']) && $item['icon']) {
+                                $context = "<i class=\"fa fa-{$item['icon']}\"></i> ";
+                            }
+                            $context .= Html::tag('span',isset($item['title']) ? $item['title'] : $index,['class'=>'hidden-xs hidden-sm']);
+                            if ($i_li == 0) {
+                                $options['class'] = 'active';
+                            }
+                            if(isset($item['options'])){
+                                $options = SArrayHelper::mergeOptions($options, $item['options']);
+                            }
+                            $result = Html::tag('li', Html::a($context  . $items_count, "#page-$index-panel", ['data-toggle' => 'tab']), $options);
+                            $i_li++;
+                            return $result;
                         }
-                        $context .= Html::tag('span',isset($item['title']) ? $item['title'] : $index,['class'=>'hidden-xs hidden-sm']);
-                        if ($i_li == 0) {
-                            $options['class'] = 'active';
-                        }
-                        if(isset($item['options'])){
-                            $options = SArrayHelper::mergeOptions($options, $item['options']);
-                        }
-                        $result = Html::tag('li', Html::a($context  . $items_count, "#page-$index-panel", ['data-toggle' => 'tab']), $options);
-                        $i_li++;
-                        return $result;
-                    }
-                ]) ?>
-        <?php endif ?>
+                    ]) ?>
+            <?php endif ?>
+        </div>
     </div>
-    <div class="panel form-horizontal">
+    <div class="panel panel-tab form-horizontal custom-tab-2">
         <?php if (isset($fields) && $fields): ?>
             <div class="panel-heading">
                 <? foreach ($fields as $key_field => $config_field): ?>

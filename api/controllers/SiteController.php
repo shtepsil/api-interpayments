@@ -13,18 +13,45 @@ class SiteController extends MainController
 {
 //    public $modelClass = 'common\models\User';
 
-    public function actionIndex()
+    /**
+     * @inheritdoc
+     */
+    protected function verbs()
     {
-        $api = new Api();
-        d::$view_response = true;
-        $res = $api->testRequest();
-        return $res;
-//        return ['SiteController' => 'actionIndex'];
+        return [
+            'index' => ['GET'],
+            'gross-balance' => ['GET'],
+            'gross-payments' => ['GET'],
+        ];
     }
 
-    public function actionCheck()
+    public function actionIndex()
     {
-        return 'UserController->check()';
+        return ['message' => $this->notFound404];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function actionGrossBalance()
+    {
+        /** @var Api $api */
+        $api = $this->api;
+        return $api->agentDeposit();
+    }
+
+    /**
+     * date - тип date, формат дд.мм.гггг
+     * @return mixed
+     */
+    public function actionGrossPayments($date)
+    {
+        /** @var Api $api */
+        $api = $this->api;
+
+        return $api->agentTransactionList([
+            'date' => $date,
+        ]);
     }
 
 }

@@ -2,6 +2,8 @@
 
 namespace api\controllers;
 
+use api\components\api\Api;
+
 class UserController extends MainController
 {
 
@@ -12,18 +14,33 @@ class UserController extends MainController
     {
         return [
             'index' => ['GET'],
-            'create' => ['POST'],
+            'get-balance' => ['GET'],
+            'get-payments' => ['GET'],
         ];
     }
 
     public function actionIndex()
     {
-        return ['UserController' => 'actionIndex()'];
+        return ['message' => $this->notFound404];
     }
 
-    public function actionCreate()
+    /**
+     * Запрос только к нам
+     * @return mixed
+     */
+    public function actionGetBalance()
     {
-        return ['UserController' => 'create()'];
+        return ['message' => 'Запрос ( GetBalance ) только в нашу БД'];
     }
-}
+
+    /**
+     * Запрос только к нам
+     * @return mixed
+     */
+    public function actionGetPayments()
+    {
+        return ['message' => 'Запрос ( GetPayments ) только в нашу БД'];
+    }
+
+}//Class
 

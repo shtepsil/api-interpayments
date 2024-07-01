@@ -40,6 +40,9 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'assetManager' => [
+            'linkAssets' => true,
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
 //            'enableStrictParsing' => true,

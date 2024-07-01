@@ -1,4 +1,10 @@
 <?php
+
+use yii\bootstrap5\BootstrapAsset;
+use yii\web\JqueryAsset;
+use yii\web\YiiAsset;
+use yii\widgets\ActiveFormAsset;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -10,9 +16,12 @@ return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'debugger'],
     'modules' => [],
     'components' => [
+        'debugger' => [
+            'class' => \common\components\Debugger::class,
+        ],
         'request' => [
             'csrfParam' => '_csrf-backend',
             'baseUrl' => '/admin',
@@ -38,6 +47,15 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'assetManager' => [
+            'linkAssets' => true,
+            'bundles' => [
+//                JqueryAsset::class => false,
+//                YiiAsset::class => false,
+//                ActiveFormAsset::class => false,
+                BootstrapAsset::class => false,
+            ],
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'enableStrictParsing' => true,
@@ -45,6 +63,7 @@ return [
             'rules' => [
                 '/' => 'site/index',
                 '<action>' => 'site/<action>',
+                '<controller>/<action>' => '<controller>/<action>',
             ],
         ],
     ],

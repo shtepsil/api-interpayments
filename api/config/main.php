@@ -15,17 +15,6 @@ return [
         'debugger' => [
             'class' => \common\components\Debugger::class,
         ],
-        'response' => [
-            // ...
-            'formatters' => [
-                \yii\web\Response::FORMAT_JSON => [
-                    'class' => 'yii\web\JsonResponseFormatter',
-                    'prettyPrint' => YII_DEBUG, // используем "pretty" в режиме отладки
-                    'encodeOptions' => JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE,
-                    // ...
-                ],
-            ],
-        ],
         'request' => [
             'csrfParam' => '_csrf-api',
             'baseUrl' => '/api',
@@ -33,10 +22,20 @@ return [
 //                'application/json' => 'yii\web\JsonParser',
 //            ]
         ],
+        'response' => [
+            'formatters' => [
+                \yii\web\Response::FORMAT_JSON => [
+                    'class' => 'yii\web\JsonResponseFormatter',
+                    'prettyPrint' => YII_DEBUG, // используем "pretty" в режиме отладки
+                    'encodeOptions' => JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE,
+                ],
+            ],
+        ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'common\models\Clients',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-api', 'httpOnly' => true],
+            'enableSession' => false
         ],
         'session' => [
             // this is the name of the session cookie used for login on the api
@@ -73,6 +72,15 @@ return [
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'user',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET <action>' => '<action>',
+                        'POST <action>' => '<action>',
+                    ]
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'payment',
                     'pluralize' => false,
                     'extraPatterns' => [
                         'GET <action>' => '<action>',

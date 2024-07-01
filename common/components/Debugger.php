@@ -14,6 +14,7 @@ class Debugger
     public static $get_headers = false;
     public static $curl = false;
     public static $view_response = false;
+    public static $view_body = false;
     public $ip_debug_detect = 0;
 
     public function __construct()

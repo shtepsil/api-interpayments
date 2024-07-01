@@ -1,0 +1,25 @@
+/* Главные стили формы админки */
+.panel-tab {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: #212121;
+    border-radius: 0 4px 4px 4px;
+}
+.custom-tab-2 .tab-pane {
+    background-color: #212121;
+}
+.custom-tab-2 .nav-tabs > li.active > a,
+.custom-tab-2 .nav-tabs > li.open > a {
+    background-color: #212121;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-tabs > li.active > a:focus,
+.nav-tabs > li.active > a:hover {
+    background-color: #3f3f3f !important;
+    cursor: pointer;
+}
+.invalid-feedback {
+    color: #ea6c41;
+}

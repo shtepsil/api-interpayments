@@ -25,6 +25,7 @@ class CcUrl
         $data = null;
 
 //        d::ajax($api_endpoint);
+//        d::pex($api_endpoint);
 
 //        d::ajax($method);
 
@@ -102,7 +103,7 @@ class CcUrl
 
 //        $debug['response']['data'] = $response;
 
-//        d::ajax($response);
+//        d::pex($response);
 
         $curlinfo_response = $this->getHeaders($response);
         $debug['response']['headers'] = $curlinfo_response['info'];

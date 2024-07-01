@@ -1,0 +1,20 @@
+/*=========================================================
+        Поле создания/редактирования токена
+=========================================================*/
+.wrap-token {
+    position: relative;
+    width: 100%;
+    padding-right: 100px;
+}
+.wrap-token .wrap-btn-create-token {
+    position: absolute;
+    right: 0;
+}
+.wrap-token .wrap-btn-create-token button {
+    width: 100px;
+    height: 42px;
+    padding: 3px 0;
+    font-size: 12px;
+    line-height: 16px;
+    border-radius: 0 2px 2px 0;
+}
