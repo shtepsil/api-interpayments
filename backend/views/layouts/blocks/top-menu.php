@@ -2,7 +2,7 @@
 
 use common\components\Debugger as d;
 use backend\components\helpers\Html;
-
+use yii\helpers\Url;
 
 
 ?>
@@ -11,7 +11,7 @@ use backend\components\helpers\Html;
     <div class="mobile-only-brand pull-left">
         <div class="nav-header pull-left">
             <div class="logo-wrap">
-                <a href="index.html">
+                <a href="<?= Url::to(['site/index'])?>">
                     <?= Html::img('img/logo.png')?>
                     <span class="brand-text">doodle</span>
                 </a>
@@ -307,7 +307,11 @@ use backend\components\helpers\Html;
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="#"><i class="zmdi zmdi-power"></i><span>Log Out</span></a>
+<!--                        <a href="#"><i class="zmdi zmdi-power"></i><span>Log Out</span></a>-->
+                        <?= Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline form-logout'])
+                            . Html::a('<i class="zmdi zmdi-power"></i><span>Выйти</span>', '#', ['class' => 'no-link'])
+                            . Html::endForm()
+                        ?>
                     </li>
                 </ul>
             </li>
@@ -315,3 +319,11 @@ use backend\components\helpers\Html;
     </div>
 </nav>
 <!-- /Top Menu Items -->
+<?php
+$logout = Url::to('site/logout');
+$this->registerJs(<<<JS
+    $('.form-logout a').on('click', () => {
+        $('.form-logout').submit();
+    });
+JS
+);

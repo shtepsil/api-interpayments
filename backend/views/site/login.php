@@ -9,24 +9,67 @@ use yii\bootstrap5\Html;
 
 $this->title = 'Login';
 ?>
-<div class="site-login">
-    <div class="mt-5 offset-lg-3 col-lg-6">
-        <h1><?= Html::encode($this->title) ?></h1>
+<? Html::encode($this->title) ?>
+<!-- Main Content -->
+<div class="page-wrapper pa-0 ma-0 auth-page">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="table-struct full-width full-height">
+            <div class="table-cell vertical-align-middle auth-form-wrap">
+                <div class="auth-form  ml-auto mr-auto no-float">
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12">
+                            <div class="mb-30">
+                                <h3 class="text-center txt-dark mb-10">Авторизация</h3>
+                                <h6 class="text-center nonecase-font txt-grey">Администраторский кабинет</h6>
+                            </div>
+                            <div class="form-wrap">
 
-        <p>Please fill out the following fields to login:</p>
+                                <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-        <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+                                    <?= $form->field($model, 'username', [
+                                        'template' => '<div class="form-group">{label}{input}{error}</div>',
+                                        'labelOptions' => ['class' => 'pull-left control-label mb-10'],
+                                        'inputOptions' => [
+                                            'placeholder' => 'Введите логин'
+                                        ]
+                                    ])->textInput(['autofocus' => true]) ?>
 
-            <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+                                    <?= $form->field($model, 'password', [
+                                        'template' => '<div class="form-group">{label}<a class="capitalize-font txt-primary mb-10 pull-right font-12 forgot-password" href="#">Забыли пароль?</a>
+                                            <div class="clearfix"></div>{input}{error}</div>',
+                                        'labelOptions' => ['class' => 'control-label mb-10'],
+                                        'inputOptions' => [
+                                            'placeholder' => 'Введите пароль'
+                                        ]
+                                    ])->passwordInput() ?>
 
-            <?= $form->field($model, 'password')->passwordInput() ?>
+                                    <?= $form->field($model, 'rememberMe')->checkbox([
+                                        'template' => '<div class="form-group"><div class="checkbox checkbox-primary pr-10 pull-left">{input}{label}</div><div class="clearfix"></div></div>',
+                                        'checked' => false
+                                    ]) ?>
 
-            <?= $form->field($model, 'rememberMe')->checkbox() ?>
+                                    <div class="form-group text-center">
+                                        <?= Html::submitButton('Авторизоваться', ['class' => 'btn btn-info btn-rounded', 'name' => 'login-button']) ?>
+                                    </div>
 
-            <div class="form-group">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary btn-block', 'name' => 'login-button']) ?>
+                                <?php ActiveForm::end(); ?>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-        <?php ActiveForm::end(); ?>
+        </div>
+        <!-- /Row -->
     </div>
+
 </div>
+<!-- /Main Content -->
+<?php
+$this->registerJs(<<<JS
+    $('.forgot-password').on('click', () => {
+        swal('Увы', 'Такой функционал пока недоступен :(', 'error'); 
+    });
+JS
+);

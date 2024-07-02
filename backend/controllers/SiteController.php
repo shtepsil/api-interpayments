@@ -64,11 +64,6 @@ class SiteController extends MainController
         return $this->render('index');
     }
 
-    public function actionTokens()
-    {
-        return $this->render('tokens');
-    }
-
 
 
 

@@ -773,6 +773,21 @@ class Debugger
         return $obj->createCommand()->getRawSql();
     }
 
+    public static function getClass($object)
+    {
+        return get_class($object);
+    }
+
+    public static function priGetClass($object)
+    {
+        return self::pri(self::getClass($object));
+    }
+
+    public static function ajaxGetClass($object)
+    {
+        return self::ajax(self::getClass($object));
+    }
+
     public static function isIPAllowed()
     {
         $allowed_ips = [

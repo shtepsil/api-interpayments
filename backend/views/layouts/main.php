@@ -4,6 +4,7 @@
 /** @var string $content */
 
 use backend\assets\AppAsset;
+use common\models\Clients;
 use common\widgets\Alert;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
@@ -33,8 +34,14 @@ AppAsset::register($this);
 
 <div class="wrapper theme-4-active pimary-color-red">
 
+    <div class="wrap-loader-global">
+        <span class="loader-global"></span>
+    </div>
+
     <?= $this->render('/layouts/blocks/top-menu')?>
-    <?= $this->render('/layouts/blocks/left-sidebar')?>
+    <?= $this->render('/layouts/blocks/left-sidebar', [
+        'clients' => Clients::find()->where(['status' => Clients::STATUS_ACTIVE])->all(),
+    ])?>
     <?= $this->render('/layouts/blocks/right-sidebar')?>
 
     <!-- Main Content -->

@@ -16,3 +16,21 @@ function createBearerToken() {
         rand(8)
     ).toUpperCase();
 }
+
+const loader = {
+    element: $('.wrap-loader-global'),
+    show(duration) {
+        if (!duration) duration = 200;
+        this.element.animate({ right: '-32px' }, duration);
+    },
+    hide(duration) {
+        if (!duration) duration = 200;
+        this.element.animate({ right: '-200px' }, duration);
+    },
+};
+
+$(document).ready(() => {
+    $('.no-link').on('click', (e) => {
+        e.preventDefault();
+    });
+});

@@ -1,4 +1,39 @@
 /* Главные стили формы админки */
+.wrapper {
+    position: relative;
+}
+.wrap-loader-global {
+    position: fixed;
+    top: -85px;
+    right: -200px;
+    background-color: rgba(0, 0, 0, 0.8);
+    height: 260px;
+    width: 120px;
+    padding: 90px 0 0 25px;
+    transform: rotate(-45deg);
+    z-index: 1040;
+}
+.loader-global {
+    width: 48px;
+    height: 48px;
+    border: 5px solid;
+    border-color: #ff3d00 transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.jq-toast-wrap .jq-toast-single.jq-icon-info {
+    background: #177ec1;
+}
 .panel-tab {
     border: 1px solid rgba(255, 255, 255, 0.1);
     background-color: #212121;

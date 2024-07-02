@@ -1,4 +1,59 @@
 /*=========================================================
+        Выпадающее меню пользователя в верхней панели
+=========================================================*/
+.dropdown-menu li a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    white-space: nowrap;
+}
+.dropdown-menu li a i {
+    color: #878787;
+    font-size: 18px;
+    margin-right: 10px;
+    width: 18px;
+} /*=========================================================
+        Список клиентов
+=========================================================*/
+.td-username {
+    position: relative;
+}
+.td-username a {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 16px 0 0 15px;
+    color: #177ec1;
+}
+.td-username a:hover {
+    text-decoration: underline;
+}
+.td-actions .zmdi {
+    padding: 5px 10px;
+    font-size: 18px;
+    float: left;
+    cursor: pointer;
+    margin: -8px 0;
+    transition: color 0.3s;
+}
+.td-actions .zmdi-edit {
+    color: rgba(230, 154, 42, 0.5) !important;
+}
+.td-actions .zmdi-edit:hover {
+    color: rgba(230, 154, 42, 1) !important;
+}
+.td-actions .zmdi-delete {
+    color: rgba(234, 108, 65, 0.5) !important;
+}
+.td-actions .zmdi-delete:hover {
+    color: rgba(234, 108, 65, 1) !important;
+}
+/*=========================================================
         Поле создания/редактирования токена
 =========================================================*/
 .wrap-token {

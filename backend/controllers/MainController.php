@@ -16,6 +16,11 @@ class MainController extends Controller
 
     public $model;
     public $AppAsset;
+    public $url = [
+        'back' => ['site/index'],
+        'control' => []
+    ];
+    public $breadcrumb = [];
 
     public function init()
     {
@@ -56,7 +61,7 @@ class MainController extends Controller
             $record->scenario = $post['scenario'];
         }
 //        d::pex($record);
-        d::ajax($record);
+//        d::ajax($record);
         if ($record->load(Yii::$app->request->post())) {
             if (Yii::$app->request->isAjax) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
@@ -76,13 +81,13 @@ class MainController extends Controller
                         $save = $record->save(false);
                         if ($save) {
 //                    if (1) {
-                            if (Yii::$app->request->post('commit') == 1) {
-                                $result['url'] = Url::to($this->url['back']);
-                            } else {
-                                $url = $this->url['control'];
-                                $url['id'] = $record->id;
-                                $result['url'] = Url::to($url);
-                            }
+//                            if (Yii::$app->request->post('commit') == 1) {
+//                                $result['url'] = Url::to($this->url['back']);
+//                            } else {
+//                                $url = $this->url['control'];
+//                                $url['id'] = $record->id;
+//                                $result['url'] = Url::to($url);
+//                            }
                             $result['set_value']['id'] = $record->id;
                             $result['message']['success'] = 'Сохранено!';
                         } else {

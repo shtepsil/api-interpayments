@@ -235,7 +235,6 @@
                                 '</pre>'
                         );
                         if (data_return?.errors) {
-                            cl('data_return?.errors');
                             var msgs =
                                 data_return.errors ||
                                 data_return.response.errors;
@@ -253,21 +252,19 @@
                                     errorsValidate += msgs[el] + '<br>';
                                 }
                                 if (errorsValidate.length > 0) {
-                                    g.error(errorsValidate);
+                                    t.error(errorsValidate);
                                 }
                             } else {
                                 updateInputs($form, messages, submitting);
                             }
                         } else {
-                            cl('data_return?.errors else');
                             if (typeof data_return.message != 'undefined') {
-                                cl('data_return?.errors else if');
                                 var message = data_return.message;
                                 if (typeof message.error != 'undefined') {
-                                    g.error(message.error);
+                                    t.error(message.error);
                                 }
                                 if (typeof message.success != 'undefined') {
-                                    g.notice(message.success);
+                                    t.info(message.success);
                                     $(
                                         'input[type=file].form-control',
                                         $form
@@ -308,7 +305,7 @@
                     },
                     error: function (data) {
                         res.html('Fail<br>' + JSON.stringify(data));
-                        g.error('Произошла ошибка на стороне сервера!');
+                        t.error('Произошла ошибка на стороне сервера!');
                     },
                     complete: function () {
                         if (load.length > 0) {
@@ -791,7 +788,7 @@
                 }
             });
             if (summary_errors != '') {
-                g.error(summary_errors.get(0).outerHTML);
+                t.error(summary_errors.get(0).outerHTML);
             }
 
             //$summary.toggle($ul.find('li').length > 0);
