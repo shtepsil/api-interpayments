@@ -48,7 +48,7 @@ class MainController extends Controller
      */
     public function actionSave()
     {
-        sleep(5);
+//        sleep(5);
         $record = $this->model;
         $post = Yii::$app->request->post();
 //        d::ajax($record::className());
@@ -79,15 +79,22 @@ class MainController extends Controller
                         $record->on($event, [$record, 'saveAll']);
                         $event_clear = $record->isNewRecord ? $record::EVENT_AFTER_INSERT : $record::EVENT_AFTER_UPDATE;
                         $record->on($event_clear, [$record, 'saveClear']);
+
                         $save = $record->save(false);
                         if ($save) {
-//                    if (1) {
+
+//                        if (1) {
 //                            if (Yii::$app->request->post('commit') == 1) {
 //                                $result['url'] = Url::to($this->url['back']);
 //                            } else {
-//                                $url = $this->url['control'];
-//                                $url['id'] = $record->id;
-//                                $result['url'] = Url::to($url);
+                            if (Yii::$app->db->getLastInsertID() != '0') {
+                                $url = $this->url['index'];
+                                $result['url'] = Url::to($url);
+                            } else {
+                                $url = $this->url['control'];
+                                $url['id'] = $record->id;
+                                $result['url'] = Url::to($url);
+                            }
 //                            }
                             $result['set_value']['id'] = $record->id;
                             $result['message']['success'] = 'Сохранено!';

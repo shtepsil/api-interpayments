@@ -9,6 +9,7 @@ $this->title = 'Список клиентов';
 /** @var Clients $clients */
 
 ?>
+<? d::res() ?>
 <!-- Title -->
 <div class="row heading-bg">
     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
@@ -30,8 +31,12 @@ $this->title = 'Список клиентов';
     <div class="col-sm-12">
         <div class="panel panel-default card-view">
             <div class="panel-heading">
-                <div class="pull-left">
+                <div class="">
                     <h6 class="panel-title txt-dark">Таблица клиентов</h6>
+                </div>
+                <br>
+                <div class="create-new-client">
+                    <a href="<?= Url::to(['clients/control'])?>" class="btn btn-primary btn-sm">Создать нового клиента</a>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -64,7 +69,7 @@ $this->title = 'Список клиентов';
                                 </tfoot>
                                 <tbody><?
                                 foreach ($clients as $client):?>
-                                    <tr>
+                                    <tr class="tr-item">
                                         <td class="td-username">
                                             <a href="<?= Url::to(['clients/control', 'id' => $client->id])?>">
                                                 <?= $client->username?>
@@ -77,7 +82,7 @@ $this->title = 'Список клиентов';
                                         <td>$320,800</td>
                                         <td class="td-actions">
                                             <div class="edit"><a href="<?= Url::to(['clients/control', 'id' => $client->id])?>"><i class="zmdi zmdi-edit txt-warning"></i></a></div>
-                                            <div class="delete"><i class="zmdi zmdi-delete txt-danger client-remove"></i></div>
+                                            <div class="delete"><i class="zmdi zmdi-delete txt-danger client-remove" data-id="<?= $client->id?>"></i></div>
                                         </td>
                                     </tr>
                                 <?endforeach;?></tbody>
@@ -91,20 +96,53 @@ $this->title = 'Список клиентов';
 </div>
 <!-- /Row -->
 <?php
-$clientRemove = Url::to(['clients/remove']);
+$clientRemove = Url::to(['clients/remove-item']);
 $this->registerJs(<<<JS
 $('.client-remove', '.table-clients').on('click', function () {
-    
+    const _this = this;
+    swal({   
+        title: 'Вы действительно хотите удалить клиента?',
+        type: 'warning',   
+        showCancelButton: true,   
+        confirmButtonColor: '#EB4C42',   
+        confirmButtonText: 'Удалить',   
+        cancelButtonText: 'Отмена',   
+        closeOnConfirm: false 
+    }, function() {
+        clientRemove.call(_this);
+    });
 });
 function clientRemove() {
+    const _this = $(this),
+        trItem = _this.closest('.tr-item'),
+        itemId = _this.attr('data-id'),
+        res = $('.res');
+
     $.ajax({
-
-    }).done(() => {
-
-    }).fail(() => {
-
+        url: '{$clientRemove}',
+        type: 'get',
+        dataType: 'json',
+        cache: false,
+        data: {id: itemId},
+        beforeSend: () => {
+            loader.show();
+        }
+    }).done((data) => {
+        res.html('<pre>' + prettyPrintJson.toHtml(data) + '</pre>');
+        if (data?.message) {
+            t.success(data.message);
+            trItem.hide(600, function () {
+                trItem.remove();
+            });
+        } else {
+            t.warning(data.error);
+        }
+    }).fail((data) => {
+        res.html(JSON.stringify(data));
+        t.error('Произошла ошибка на стороне сервера');
     }).always(() => {
-
+        loader.hide();
+        swal.close();
     });
 }
 JS

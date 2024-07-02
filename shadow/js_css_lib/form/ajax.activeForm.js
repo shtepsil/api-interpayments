@@ -282,17 +282,19 @@
                                     }
                                 );
                             }
-                            if (typeof data_return.url != 'undefined') {
-                                var isUrl =
-                                    window.location.pathname +
-                                        window.location.search ==
-                                    data_return.url;
+                            if (data_return?.url) {
+                                window.location = data_return.url;
+                                // var isUrl =
+                                //     window.location.pathname +
+                                //         window.location.search ==
+                                //     data_return.url;
 
-                                if (isUrl) {
-                                    window.location.reload();
-                                } else {
-                                    window.location = data_return.url;
-                                }
+                                // if (isUrl) {
+                                //     alert('!isUrl');
+                                //     window.location.reload();
+                                // } else {
+                                //     window.location = data_return.url;
+                                // }
                             }
                         }
                         if (typeof data_return.js != 'undefined') {

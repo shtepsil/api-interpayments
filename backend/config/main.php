@@ -27,7 +27,7 @@ return [
             'baseUrl' => '/admin',
         ],
         'user' => [
-            'identityClass' => 'common\models\Clients',
+            'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],

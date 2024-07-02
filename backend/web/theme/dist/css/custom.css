@@ -14,7 +14,8 @@
     font-size: 18px;
     margin-right: 10px;
     width: 18px;
-} /*=========================================================
+}
+/*=========================================================
         Список клиентов
 =========================================================*/
 .td-username {
@@ -72,4 +73,29 @@
     font-size: 12px;
     line-height: 16px;
     border-radius: 0 2px 2px 0;
+}
+/*=========================================================
+        Поле создания пароля
+=========================================================*/
+.wrap-password {
+    position: relative;
+    width: 100%;
+}
+.wrap-password .wrap-view-password {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    z-index: 2;
+}
+.wrap-password .wrap-view-password .fa {
+    padding: 0px 15px;
+    line-height: 2.5rem;
+    font-size: 20px;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.wrap-password .wrap-view-password .fa:hover {
+    background-color: #3a3a3a;
 }
