@@ -47,4 +47,4 @@ phpunit.phar
 *.rar
 
 /test
-/text_constants.php
+/test_constants.php
