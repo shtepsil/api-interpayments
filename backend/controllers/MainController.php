@@ -48,6 +48,7 @@ class MainController extends Controller
      */
     public function actionSave()
     {
+        sleep(5);
         $record = $this->model;
         $post = Yii::$app->request->post();
 //        d::ajax($record::className());

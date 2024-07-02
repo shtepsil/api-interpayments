@@ -208,8 +208,7 @@
                 }
                 var messages = {},
                     submitting = false,
-                    res = $('.res'),
-                    load = $form.find('div.layer-loading');
+                    res = $('.res');
 
                 console.log(settings.validationUrl);
 
@@ -222,10 +221,7 @@
                     //},
                     beforeSubmit: function () {},
                     beforeSend: function () {
-                        //							console.log($form);
-                        if (load.length > 0) {
-                            load.fadeIn(100);
-                        }
+                        loader.show(100);
                         res.html('result');
                     },
                     success: function (data_return) {
@@ -308,9 +304,7 @@
                         t.error('Произошла ошибка на стороне сервера!');
                     },
                     complete: function () {
-                        if (load.length > 0) {
-                            load.fadeOut(100);
-                        }
+                        loader.hide(100);
                     },
                 });
             });
