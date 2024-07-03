@@ -17,6 +17,8 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log', 'debugger'],
+//    'defaultRoute' => 'clients/index',// Не правильно срабатывает
+//    'catchAll' => ['site/offline'],// Сработал, только page 404, надо разбираться.
     'modules' => [],
     'components' => [
         'debugger' => [

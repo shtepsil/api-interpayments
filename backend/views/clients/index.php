@@ -7,6 +7,7 @@ use yii\helpers\Url;
 $this->title = 'Список клиентов';
 
 /** @var Clients $clients */
+/** @var Clients $client */
 
 ?>
 <? d::res() ?>
@@ -45,10 +46,19 @@ $this->title = 'Список клиентов';
                     <div class="table-wrap">
                         <div class="table-responsive">
                             <table id="datable_1" class="table table-hover display pb-30 table-clients">
+                                <colgroup>
+                                    <col>
+                                    <col>
+                                    <col width="395">
+                                    <col width="80">
+                                    <col>
+                                    <col>
+                                    <col width="110">
+                                </colgroup>
                                 <thead>
                                 <tr>
-                                    <th>Логин</th>
-                                    <th>Email</th>
+                                    <th>Имя клиента(аккаунта)</th>
+                                    <th>Описание</th>
                                     <th>Токен</th>
                                     <th>Что то</th>
                                     <th>Дата регистрации</th>
@@ -56,30 +66,36 @@ $this->title = 'Список клиентов';
                                     <th>Действия</th>
                                 </tr>
                                 </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>Логин</th>
-                                    <th>Email</th>
-                                    <th>Токен</th>
-                                    <th>Что то</th>
-                                    <th>Дата регистрации</th>
-                                    <th>Баланс</th>
-                                    <th>Действия</th>
-                                </tr>
-                                </tfoot>
+<!--                                <tfoot>-->
+<!--                                <tr>-->
+<!--                                    <th>Имя клиента(аккаунта)</th>-->
+<!--                                    <th>Описание</th>-->
+<!--                                    <th>Токен</th>-->
+<!--                                    <th>Что то</th>-->
+<!--                                    <th>Дата регистрации</th>-->
+<!--                                    <th>Баланс</th>-->
+<!--                                    <th>Действия</th>-->
+<!--                                </tr>-->
+<!--                                </tfoot>-->
                                 <tbody><?
                                 foreach ($clients as $client):?>
                                     <tr class="tr-item">
-                                        <td class="td-username">
+                                        <td class="td-name">
                                             <a href="<?= Url::to(['clients/control', 'id' => $client->id])?>">
-                                                <?= $client->username?>
+                                                <?= $client->name?>
                                             </a>
                                         </td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td>$320,800</td>
+                                        <td><?= $client->description?></td>
+                                        <td>
+                                            <div class="wrap-token">
+                                                <div class="token-string"><?= $client->access_token?></div>
+                                                <div class="btn btn-primary btn-outline btn-sm copy"><i class="fa fa-files-o" data-type="token" aria-hidden="true"></i>&nbsp;&nbsp;Скопировать токен</div>
+                                            </div>
+
+                                        </td>
+                                        <td></td>
+                                        <td><?= date('d.m.Y', $client->created_at)?></td>
+                                        <td></td>
                                         <td class="td-actions">
                                             <div class="edit"><a href="<?= Url::to(['clients/control', 'id' => $client->id])?>"><i class="zmdi zmdi-edit txt-warning"></i></a></div>
                                             <div class="delete"><i class="zmdi zmdi-delete txt-danger client-remove" data-id="<?= $client->id?>"></i></div>
@@ -112,6 +128,20 @@ $('.client-remove', '.table-clients').on('click', function () {
         clientRemove.call(_this);
     });
 });
+
+// Копирование информации в буфер обмена
+$('.copy', '.wrap-token').on('click', function() {
+    let _this = $(this),
+        text = _this.closest('.wrap-token').find('.token-string').text();
+
+    if (text != '') {
+        copyToClipboard(text);
+        t.success('Токен скопирован');
+    } else {
+        t.warning('Нет информации для копирования');
+    }
+});
+
 function clientRemove() {
     const _this = $(this),
         trItem = _this.closest('.tr-item'),

@@ -18,10 +18,10 @@
 /*=========================================================
         Список клиентов
 =========================================================*/
-.td-username {
+.td-name {
     position: relative;
 }
-.td-username a {
+.td-name a {
     display: inline-block;
     height: 100%;
     width: 100%;
@@ -31,8 +31,11 @@
     padding: 16px 0 0 15px;
     color: #177ec1;
 }
-.td-username a:hover {
+.td-name a:hover {
     text-decoration: underline;
+}
+.table-clients .token-string {
+    margin-bottom: 5px;
 }
 .td-actions .zmdi {
     padding: 5px 10px;

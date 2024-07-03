@@ -29,6 +29,11 @@ class ClientsController extends MainController
         return $this->render('index', ['clients' => Clients::getAll()]);
     }
 
+    public function actionOffline()
+    {
+        return $this->render('offline');
+    }
+
     public function actionRemoveItem($id)
     {
         $result = ['error' => 'Клиент не найден'];

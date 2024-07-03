@@ -5,6 +5,7 @@
 
 use backend\assets\AppAsset;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -30,9 +31,9 @@ AppAsset::register($this);
 <div class="wrapper pa-0">
     <header class="sp-header">
         <div class="sp-logo-wrap pull-left">
-            <a href="index.html">
+            <a href="<?= Url::to(['site/index'])?>">
 <!--                <img class="brand-img mr-10" src="dist/img/logo.png" alt="brand"/>-->
-                <span class="brand-text">InterPayments</span>
+                <span class="brand-text">Админ панель</span>
             </a>
         </div>
 <!--        <div class="form-group mb-0 pull-right">-->

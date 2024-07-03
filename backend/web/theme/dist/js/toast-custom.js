@@ -11,7 +11,7 @@ class JqueryToast {
             icon: 'info',
             loaderBg: '#177ec1',
             position: 'top-right',
-            hideAfter: 5000,
+            hideAfter: 3000,
             stack: 6,
         };
 

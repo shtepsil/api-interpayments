@@ -65,6 +65,7 @@ class AppAsset extends AssetBundle
         // Pretty print json
         'dist/js/pretty-print-json.min.js',
         'dist/js/toast-custom.js',
+        'dist/js/shadow.js',
         'dist/js/common.js',
         'dist/js/custom.js',
     ];

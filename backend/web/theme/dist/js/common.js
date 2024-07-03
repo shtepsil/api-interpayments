@@ -29,6 +29,17 @@ const loader = {
     },
 };
 
+// Копирование в буфер обмена windows
+function copyToClipboard(text) {
+    if (typeof text === 'undefined') text = '';
+    var copytext2 = document.createElement('textarea');
+    copytext2.value = text;
+    document.body.appendChild(copytext2);
+    copytext2.select();
+    document.execCommand('copy');
+    document.body.removeChild(copytext2);
+}
+
 $(document).ready(() => {
     $('.no-link').on('click', (e) => {
         e.preventDefault();
