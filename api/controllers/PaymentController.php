@@ -21,6 +21,7 @@ class PaymentController extends MainController
 //            'pay' => ['POST'],
             'check-status' => ['POST'],
             'check-and-pay' => ['POST'],
+            'check-and-payy' => ['GET'],
         ];
     }
 
@@ -77,6 +78,73 @@ class PaymentController extends MainController
             $payResult = $api->paymentPay([
 //                'agent_transaction_id' => $this->agent_transaction_id
                 'agent_transaction_id' => $post['agent_transaction_id'],
+            ]);
+
+            // Если pay успешен
+            if ($payResult['success']) {
+                return Response::success($payResult);
+            } else {
+                //# если pay вернул ошибку
+                return Response::error($payResult);
+            }
+
+        } else {
+            //# если check вернул ошибку
+            return Response::error($checkResult);
+        }
+    }
+
+    public function actionCheckAndPayy()
+    {
+        $post = Yii::$app->request->post();
+//        return $post;
+        $get = Yii::$app->request->get();
+//        return $get;
+
+//        if (
+//            !isset($post['agent_transaction_id'])
+//            OR !isset($post['account'])
+//            OR !isset($post['amount'])
+//        ) {
+//            return Response::error('Запрос должен содержать обязательные параметры: agent_transaction_id, account, amount.');
+//        }
+
+        /** @var Api $api */
+        $api = $this->api;
+
+        $params = [
+            'service_id' => Yii::$app->params['service_id'],
+            'account' =>  'bowfnadenoc1972',
+            'agent_transaction_id' => $this->agent_transaction_id,
+            'amount' => 0.35,
+        ];
+//        $params = [
+//            'service_id' => Yii::$app->params['service_id'],
+//            'account' =>  $post['account'],
+//            'agent_transaction_id' => $post['agent_transaction_id'],
+//            'amount' => $post['amount'],
+//        ];
+//        $params = [
+//            'service_id' => Yii::$app->params['service_id'],
+//            'account' =>  $get['account'],
+//            'agent_transaction_id' => $get['agent_transaction_id'],
+//            'amount' => $get['amount'],
+//        ];
+//        d::ajax($params);
+
+        $checkResult = $api->paymentCheck($params);
+//        return $checkResult;
+
+//        $payResult = $api->paymentPay([
+//            'agent_transaction_id' => $this->agent_transaction_id
+//        ]);
+//        return $payResult;
+
+        // Если check успешен
+        if (is_array($checkResult) AND isset($checkResult['success']) AND $checkResult['success']) {
+            $payResult = $api->paymentPay([
+                'agent_transaction_id' => $this->agent_transaction_id
+//                'agent_transaction_id' => $post['agent_transaction_id'],
             ]);
 
             // Если pay успешен

@@ -64,6 +64,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '/' => 'site/index',
+                'tab-debug-ajax' => 'debug/tab-debug-ajax',
                 '<action>' => 'site/<action>',
                 '<controller>/<action>' => '<controller>/<action>',
             ],

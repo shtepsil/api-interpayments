@@ -61,8 +61,8 @@ class SiteController extends MainController
      */
     public function actionIndex()
     {
-//        return $this->redirect('/clients/index');
-        return $this->render('index');
+        return $this->redirect('clients/index');
+//        return $this->render('index');
     }
 
 

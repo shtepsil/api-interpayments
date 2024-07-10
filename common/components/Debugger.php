@@ -2,8 +2,8 @@
 
 namespace common\components;
 
+use shadow\helpers\SArrayHelper;
 use Yii;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 class Debugger
@@ -247,7 +247,7 @@ class Debugger
                         Html::addCssClass($b_options,$btn['class']);
                     }
 
-                    $b_options = ArrayHelper::merge($btn,$b_options);
+                    $b_options = SArrayHelper::merge($btn,$b_options);
 
                 }
                 $b_name = $b_options[0];
@@ -266,7 +266,7 @@ class Debugger
             ];
 
             if(isset($it['options']) AND count($it['options'])){
-                $i_options = ArrayHelper::merge($i_options,$it['options']);
+                $i_options = SArrayHelper::merge($i_options,$it['options']);
             }
 
             $i_type = ($it['type'])?:'text';

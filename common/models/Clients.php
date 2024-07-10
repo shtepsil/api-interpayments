@@ -122,20 +122,20 @@ class Clients extends SActiveRecord implements IdentityInterface
             ]
         ];
 
-        if ($this->isNewRecord) {
-            $this->scenario = Clients::SCENARIO_NEW_CLIENT;
-            $result['groups']['main']['fields']['password'] = [
-                'title' => 'Пароль',
-                'type' => 'password',
-                'field_options' => [
-                    'template' => Yii::$app->controller->renderPartial('field_password'),
-                    'inputOptions' => [
-                        'placeholder' => 'Придумайте новый пароль',
-                        'autocomplete' => 'off'
-                    ]
-                ],
-            ];
-        }
+//        if ($this->isNewRecord) {
+//            $this->scenario = Clients::SCENARIO_NEW_CLIENT;
+//            $result['groups']['main']['fields']['password'] = [
+//                'title' => 'Пароль',
+//                'type' => 'password',
+//                'field_options' => [
+//                    'template' => Yii::$app->controller->renderPartial('field_password'),
+//                    'inputOptions' => [
+//                        'placeholder' => 'Придумайте новый пароль',
+//                        'autocomplete' => 'off'
+//                    ]
+//                ],
+//            ];
+//        }
 
         return $result;
     }

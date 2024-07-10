@@ -1,0 +1,132 @@
+.wrap-debug {
+    min-height: 400px;
+    /*font-size: 16px;*/
+}
+.wrap-debug .dn{
+    display: none;
+}
+.wrap-debug .tabs {
+    display: flex;
+    flex-direction: column;
+}
+
+.wrap-debug .tabs__links {
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    order: 0;
+    white-space: nowrap;
+    background-color: #fff;
+    border: 1px solid #e3f2fd;
+    box-shadow: 0 2px 4px 0 #e3f2fd;
+}
+
+.wrap-debug .tabs__links>a {
+    display: inline-block;
+    text-decoration: none;
+    padding: 6px 10px;
+    text-align: center;
+    color: #1976d2;
+}
+
+.wrap-debug .tabs__links>a:hover {
+    background-color: rgba(227, 242, 253, 0.3);
+}
+
+.wrap-debug .tabs>div:not(.tabs__links) {
+    display: none;
+    order: 1;
+}
+
+.wrap-debug .tabs>div:target {
+    display: block;
+}
+
+.wrap-debug .mini-form {
+    overflow: hidden;
+}
+
+.wrap-debug .tab-header{
+    margin: 0 0 10px;
+}
+
+.wrap-debug img.loading {
+    display: none;
+    width: 22px;
+    position: absolute;
+    top: -77px;
+}
+.wrap-debug button, [class=*btn]{
+    border: 0;
+    cursor: pointer;
+}
+.wrap-debug button.btn-sm{
+    margin-top: -2px;
+}
+.wrap-debug .btn_debug{
+    display: inline;
+    font: 1.4rem/1.43em "Proxima Nova", sans-serif;
+    padding: 8px 22px;
+    overflow: hidden;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -o-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -khtml-border-radius: 20px;
+    border-radius: 20px;
+}
+.wrap-debug .btn_debug.blue{
+    background-color: #4686cc;
+    color: #fff;
+}
+.wrap-debug .btn_debug.error{
+    background-color: #CC4646;
+    color: #fff;
+}
+.wrap-debug input,
+.wrap-debug textarea {
+    display: inline-block;
+}
+.wrap-debug input.form-control-sm {
+    height: 35px;
+}
+.wrap-debug textarea.form-control-sm {}
+.wrap-debug .float-left{ float: left; }
+
+.wrap-debug .h90{
+    height: 90px;
+}
+.wrap-debug .w100proc{
+    width: 100%;
+}
+.wrap-debug .w50proc{
+    width: 50%;
+}
+.wrap-debug .w100{
+    width: 100px;
+}
+.wrap-debug .w120{
+    width: 120px;
+}
+.wrap-debug .w150{
+    width: 150px;
+}
+.wrap-debug .w200{
+    width: 200px;
+}
+.wrap-debug .w250{
+    width: 250px;
+}
+.wrap-debug .w300{
+    width: 300px;
+}
+.wrap-debug .w350{
+    width: 350px;
+}
+.wrap-debug .w400{
+    width: 400px;
+}

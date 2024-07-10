@@ -13,7 +13,7 @@ use yii\helpers\Url;
             <div class="logo-wrap">
                 <a href="<?= Url::to(['site/index'])?>">
                     <?= Html::img('img/logo.png')?>
-                    <span class="brand-text">doodle</span>
+                    <span class="brand-text">Админ панель</span>
                 </a>
             </div>
         </div>
@@ -288,7 +288,7 @@ use yii\helpers\Url;
                         <a href="inbox.html"><i class="zmdi zmdi-email"></i><span>Inbox</span></a>
                     </li>
                     <li>
-                        <a href="#"><i class="zmdi zmdi-settings"></i><span>Settings</span></a>
+                        <a href="<?= Url::to(['debug/index'])?>"><i class="zmdi zmdi-settings"></i><span>Settings</span></a>
                     </li>
                     <li class="divider"></li>
                     <li class="sub-menu show-on-hover">
