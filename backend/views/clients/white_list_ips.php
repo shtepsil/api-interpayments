@@ -44,7 +44,7 @@ use yii\web\View;
             ]
         ],
         'title' => 'Добавить новый разрешённый IP',
-        'body' => Html::textInput('new_ip', '168.192.0.1', [
+        'body' => Html::textInput('new_ip', '', [
             'class' => 'form-control', 'placeholder' => 'Введите IP'
         ])// . d::res()
     ])?>
