@@ -63,6 +63,7 @@ class MainController extends Controller
         }
 //        d::pex($record);
 //        d::ajax($record);
+//        d::ajax(get_class($record));
         if ($record->load(Yii::$app->request->post())) {
             if (Yii::$app->request->isAjax) {
                 Yii::$app->response->format = Response::FORMAT_JSON;

@@ -20,15 +20,15 @@ $('.wrap-token button').on('click', function () {
     if (inputToken.val() === '') {
         inputToken.val(createBearerToken());
     } else {
-        swal({   
-            title: 'Вы действительно хотите пересоздать токен?',   
-            text: 'Существующий токен будет удалён безвозвратно!',   
-            type: 'warning',   
-            showCancelButton: true,   
-            confirmButtonColor: '#e69a2a',   
-            confirmButtonText: 'Пересоздать',   
-            cancelButtonText: 'Отмена',   
-            closeOnConfirm: false 
+        swal({
+            title: 'Вы действительно хотите пересоздать токен?',
+            text: 'Существующий токен будет удалён безвозвратно!',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e69a2a',
+            confirmButtonText: 'Пересоздать',
+            cancelButtonText: 'Отмена',
+            closeOnConfirm: false
         }, function() {
             inputToken.val(createBearerToken());
             swal('Успешно', 'Новый токен создан', 'success');

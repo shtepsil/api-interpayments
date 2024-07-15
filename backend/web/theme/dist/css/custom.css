@@ -102,3 +102,19 @@
 .wrap-password .wrap-view-password .fa:hover {
     background-color: #3a3a3a;
 }
+/*=========================================================
+        Вкладка добавления/удаления IP адреса
+=========================================================*/
+.wrap-ips-list .ips-list .ip-remove {
+    float: right;
+    font-size: 22px;
+    color: rgba(234, 108, 65, 0.5) !important;
+    padding: 5px 12px;
+    margin-top: -6px;
+    margin-right: -12px;
+    cursor: pointer;
+    transition: 0.3s all;
+}
+.wrap-ips-list .ips-list .ip-remove:hover {
+    color: #ea6c41 !important;
+}

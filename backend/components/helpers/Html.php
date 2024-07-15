@@ -7,7 +7,7 @@ use common\components\Debugger as d;
 use Yii;
 use yii\web\Controller;
 
-class Html extends \yii\bootstrap5\Html
+class Html extends \yii\bootstrap\Html
 {
 
     public static function img($src, $options = []): string

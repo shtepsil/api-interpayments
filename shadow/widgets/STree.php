@@ -10,7 +10,7 @@ namespace shadow\widgets;
 
 use common\models\Structure;
 use Yii;
-use yii\bootstrap5\Widget;
+use yii\bootstrap\Widget;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;

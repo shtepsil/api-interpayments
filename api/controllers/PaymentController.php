@@ -9,7 +9,7 @@ use Yii;
 class PaymentController extends MainController
 {
 
-    private string $agent_transaction_id = '540464500';
+    private string $agent_transaction_id = '600000001';
 
     /**
      * @inheritdoc
@@ -116,7 +116,7 @@ class PaymentController extends MainController
             'service_id' => Yii::$app->params['service_id'],
             'account' =>  'bowfnadenoc1972',
             'agent_transaction_id' => $this->agent_transaction_id,
-            'amount' => 0.35,
+            'amount' => 0,
         ];
 //        $params = [
 //            'service_id' => Yii::$app->params['service_id'],

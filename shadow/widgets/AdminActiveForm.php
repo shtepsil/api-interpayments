@@ -12,7 +12,7 @@ namespace shadow\widgets;
 use common\components\Debugger as d;
 use yii\helpers\Html;
 use shadow\assets\AdminActiveFormAsset;
-use yii\bootstrap5\ActiveForm;
+use yii\bootstrap\ActiveForm;
 use yii\helpers\Json;
 use yii\base\InvalidConfigException;
 

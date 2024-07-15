@@ -9,7 +9,7 @@
 
 namespace shadow\widgets;
 
-use yii\bootstrap5\ActiveField;
+use yii\bootstrap\ActiveField;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 

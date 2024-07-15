@@ -4,7 +4,7 @@ namespace shadow\widgets;
 use common\components\Debugger as d;
 use shadow\assets\Select2Assets;
 use Yii;
-use yii\bootstrap5\Widget;
+use yii\bootstrap\Widget;
 use yii\db\ActiveQuery;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;

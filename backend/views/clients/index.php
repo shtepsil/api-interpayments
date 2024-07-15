@@ -82,7 +82,7 @@ $this->title = 'Список клиентов';
                                     <tr class="tr-item">
                                         <td class="td-name">
                                             <a href="<?= Url::to(['clients/control', 'id' => $client->id])?>">
-                                                <?= $client->name?>
+                                                <?= $client->id?>: <?= $client->name?>
                                             </a>
                                         </td>
                                         <td><?= $client->description?></td>

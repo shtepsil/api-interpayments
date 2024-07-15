@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\components\Debugger as d;
+use kartik\select2\Select2;
 use shadow\SActiveRecord;
 use shadow\widgets\CKEditor;
 use Yii;
@@ -84,8 +85,14 @@ class Clients extends SActiveRecord implements IdentityInterface
     }
 
     public $password;
+    public $ips;
     public function FormParams(): array
     {
+        $data_ips = WhiteList::find()
+            ->select(['ip', 'id'])
+            ->where(['client_id' => $this->id])
+            ->indexBy('id')->column();
+
         $result = [
             'form_action' => ['clients/save'],
             'cancel' => ['category/index'],
@@ -115,6 +122,28 @@ class Clients extends SActiveRecord implements IdentityInterface
                             'type' => 'textArea',
                             'widget' => [
                                 'class' => CKEditor::className()
+                            ]
+                        ],
+                    ],
+                ],
+                'ips_list' => [
+                    'title' => 'Разрешённые IP (<span class="tab-count-ips">' . count($data_ips) . '</span>)',
+                    'icon' => 'suitcase',
+                    'options' => [],
+                    'fields' => [
+                        'ips' => [
+                            'title' => 'Список разрешённых<br>IP адресов ' . count($data_ips),
+                            'type' => 'render',
+                            'render' => [
+                                'view' => 'white_list_ips',
+                                'params' => [
+                                    'client_id' => $this->id,
+                                    'data_ips' => $data_ips
+                                ],
+                            ],
+//                            'template' => Yii::$app->controller->renderPartial('white_list_ips'),
+                            'inputOptions' => [
+//                                'placeholder' => 'Нажмите на кнопку "Создать новый токен"',
                             ]
                         ],
                     ],

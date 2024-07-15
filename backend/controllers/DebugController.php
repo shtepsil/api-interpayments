@@ -20,6 +20,7 @@ class DebugController extends MainController
                 'class' => 'backend\actions\TabsAjaxActions',
                 'actions' => [
                     'debug' => 'debug\\Debug',
+                    'migrations' => 'debug\\Migrations',
                 ],
             ],
         ];

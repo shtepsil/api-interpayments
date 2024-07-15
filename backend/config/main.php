@@ -1,6 +1,6 @@
 <?php
 
-use yii\bootstrap5\BootstrapAsset;
+use yii\bootstrap\BootstrapAsset;
 use yii\web\JqueryAsset;
 use yii\web\YiiAsset;
 use yii\widgets\ActiveFormAsset;

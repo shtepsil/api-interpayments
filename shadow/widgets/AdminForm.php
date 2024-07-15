@@ -3,8 +3,9 @@ namespace shadow\widgets;
 
 use common\components\Debugger as d;
 use shadow\assets\Select2Assets;
+use shadow\helpers\SArrayHelper;
 use Yii;
-use yii\bootstrap5\Widget;
+use yii\bootstrap\Widget;
 use yii\db\ActiveQuery;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -200,6 +201,7 @@ class AdminForm extends Widget
                 $field->dropDownList($data);
             }
         }
+
         if (isset($config['type'])) {
             $params_field = isset($config['params']) ? $config['params'] : [];
             switch ($config['type']) {
@@ -232,6 +234,15 @@ class AdminForm extends Widget
                         isset($config['data']) ? $config['data'] : [],
                         isset($config['data_fields']) ? $config['data_fields'] : []
                     );
+                    break;
+                case 'render':
+                    if (isset($config['render']) AND isset($config['render']['view'])) {
+                        $params = [ 'title' => $name ];
+                        if (isset($config['render']['params']) AND is_array($config['render']['params'])) {
+                            $params = SArrayHelper::merge($params, $config['render']['params']);
+                        }
+                        $field = Yii::$app->controller->renderPartial($config['render']['view'], $params);
+                    }
                     break;
                 default:
                     $field->input($config['type'], $params_field);
