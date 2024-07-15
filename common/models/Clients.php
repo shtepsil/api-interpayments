@@ -132,7 +132,7 @@ class Clients extends SActiveRecord implements IdentityInterface
                     'options' => [],
                     'fields' => [
                         'ips' => [
-                            'title' => 'Список разрешённых<br>IP адресов ' . count($data_ips),
+                            'title' => 'Список разрешённых<br>IP адресов ',
                             'type' => 'render',
                             'render' => [
                                 'view' => 'white_list_ips',
