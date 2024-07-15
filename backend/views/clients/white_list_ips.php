@@ -1,5 +1,7 @@
 <?php
 
+// Коммент
+
 use backend\components\helpers\Html;
 use backend\components\widgets\Modal;
 use common\components\Debugger as d;
