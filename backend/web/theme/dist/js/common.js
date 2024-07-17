@@ -64,6 +64,12 @@ $('[data-bs-target]').on('click', function () {
         modalTarget = _this.attr('data-bs-target');
     $(modalTarget).modal('show');
 });
+// Close bootstrap modals
+$('[data-dismiss]').on('click', function () {
+    const _this = $(this),
+        modalTarget = _this.attr('data-dismiss');
+    $(modalTarget).modal('hide');
+});
 
 // Send
 window.send = (url, params, details) => {

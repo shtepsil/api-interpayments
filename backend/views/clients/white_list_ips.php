@@ -44,7 +44,7 @@ use yii\web\View;
             ]
         ],
         'title' => 'Добавить новый разрешённый IP',
-        'body' => Html::textInput('new_ip', '168.192.0.1', [
+        'body' => Html::textInput('new_ip', '', [
             'class' => 'form-control', 'placeholder' => 'Введите IP'
         ])// . d::res()
     ])?>
@@ -57,7 +57,7 @@ $this->registerJs(<<<JS
 var modal = $('#modalAddIp', '.wrap-ips-list');
 
 modal.on('hidden.bs.modal', function() {
-    $('[name=new_ip]', '.wrap-ips-list').val('168.192.0.1');
+    $('[name=new_ip]', '.wrap-ips-list').val('');
 });
 modal.on('show.bs.modal', function() {
     
