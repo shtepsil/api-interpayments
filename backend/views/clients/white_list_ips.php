@@ -44,7 +44,7 @@ use yii\web\View;
             ]
         ],
         'title' => 'Добавить новый разрешённый IP',
-        'body' => Html::textInput('new_ip', '', [
+        'body' => Html::textInput('new_ip', '168.192.0.1', [
             'class' => 'form-control', 'placeholder' => 'Введите IP'
         ])// . d::res()
     ])?>
@@ -101,8 +101,15 @@ $('.btn-ad-ip', '.wrap-ips-list').on('click', function () {
                 tabCountIps.html(numCount + 1);
                 modal.modal('hide');
             } else {
-                cl(data.message.error);
-                t.warning(data.message.error);
+                if (data?.errors) {
+                    // cl(data.errors);
+                    t.warning(data.errors['whitelist-ip'])
+                }else if (data?.message?.error) {
+                    // cl(data.message.error);
+                    t.warning(data.message.error);
+                } else {
+                    t.warning('Ошибка сервера');
+                }
             }
         },
         (data) => {

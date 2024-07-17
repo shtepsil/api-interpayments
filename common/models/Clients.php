@@ -186,6 +186,33 @@ class Clients extends SActiveRecord implements IdentityInterface
         $this->username =  'username' . $time;
     }
 
+    /**
+     *
+     * @param $identity
+     * @return bool
+     */
+    public function checkAccessIP($identity)
+    {
+//        d::ajax(Yii::$app->request->userIP);
+        $access = false;
+        $ips = WhiteList::find()
+            ->select('ip')
+            ->where(['client_id' => $identity->id])
+            ->indexBy('ip')->asArray()->all();
+
+//        d::ajax([
+//            'id' => $identity->id,
+//            'ip' => Yii::$app->request->userIP,
+//            'ips' => array_keys($ips),
+//            'token' => $identity->access_token
+//        ]);
+
+        if (count($ips) > 0 AND in_array(Yii::$app->request->userIP, array_keys($ips))) {
+            $access = true;
+        }
+        return $access;
+    }
+
     public static function getAll()
     {
         return static::find()->where(['status' => self::STATUS_ACTIVE])->all();
@@ -205,7 +232,13 @@ class Clients extends SActiveRecord implements IdentityInterface
     public static function findIdentityByAccessToken($token, $type = null)
     {
 //        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
-        return static::findOne(['access_token' => $token]);
+        $identity = static::findOne(['access_token' => $token]);
+        if ($identity) {
+            if (!$identity->checkAccessIP($identity)) {
+                $identity = false;
+            }
+        }
+        return $identity;
     }
 
     /**
