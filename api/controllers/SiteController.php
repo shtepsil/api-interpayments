@@ -21,7 +21,6 @@ class SiteController extends MainController
     {
         return [
             'index' => ['GET'],
-            'get-ip' => ['GET'],
             'gross-balance' => ['GET'],
             'gross-payments' => ['GET'],
         ];
@@ -30,11 +29,6 @@ class SiteController extends MainController
     public function actionIndex()
     {
         return ['message' => $this->notFound404];
-    }
-
-    public function actionGetIp()
-    {
-        return Yii::$app->request->userIP;
     }
 
     /**

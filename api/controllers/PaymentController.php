@@ -157,7 +157,7 @@ class PaymentController extends MainController
 
     /**
      * agent_transaction_id - тип String, Идентификационный номер транзакции на стороне Агента.
-     *   Этот id не повторяется, и каждая новая операция должна сопровождаться новым id.
+     * Этот id не повторяется, и каждая новая операция должна сопровождаться новым id.
      * @return mixed
      */
     public function actionCheckStatus()

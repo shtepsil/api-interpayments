@@ -26,6 +26,11 @@ class ApiBase
 
     protected function request($endpoint = '', $params = [], $method = 'GET')
     {
+        if (is_string($params)) {
+            $method = $params;
+            $params = [];
+        }
+
         $params['base_headers'] = [
             'Content-Type: application/json; charset=UTF-8',
             'Accept: application/json',

@@ -1,8 +1,4 @@
 <?php
-/*
- * Ссылка на документацию Kaspi API
- * https://kaspi.kz/merchantcabinet/support/pages/viewpage.action?pageId=22645486
- */
 
 namespace api\components\api;
 
@@ -11,6 +7,9 @@ use common\components\Debugger as d;
 class Api extends ApiBase
 {
 
+    /**
+     * @throws CException
+     */
     public function __construct($token = '')
     {
         if ($token == '') {
@@ -65,7 +64,7 @@ class Api extends ApiBase
      */
     public function checkStatus(array $params = [])
     {
-        return $this->request('payment/check_status', $params);
+        return $this->request('payment/check_status', $params, 'POST');
     }
 
     // DEBUG ==================================================
