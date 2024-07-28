@@ -35,9 +35,7 @@ class SiteController extends MainController
      */
     public function actionGrossBalance()
     {
-        /** @var Api $api */
-        $api = $this->api;
-        return $api->agentDeposit();
+        return $this->api->agentDeposit();
     }
 
     /**
@@ -46,10 +44,7 @@ class SiteController extends MainController
      */
     public function actionGrossPayments($date)
     {
-        /** @var Api $api */
-        $api = $this->api;
-
-        return $api->agentTransactionList([
+        return $this->api->agentTransactionList([
             'date' => $date,
         ]);
     }

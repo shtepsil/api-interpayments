@@ -59,10 +59,7 @@ class PaymentController extends MainController
             return Response::error('Запрос должен содержать обязательные параметры: agent_transaction_id, account, amount.');
         }
 
-        /** @var Api $api */
-        $api = $this->api;
-
-        $checkResult = $api->paymentCheck([
+        $checkResult = $this->api->paymentCheck([
             'service_id' => Yii::$app->params['service_id'],
             'account' =>  $post['account'],
 //            'agent_transaction_id' => $this->agent_transaction_id,
@@ -75,7 +72,7 @@ class PaymentController extends MainController
 
         // Если check успешен
         if (is_array($checkResult) AND isset($checkResult['success']) AND $checkResult['success']) {
-            $payResult = $api->paymentPay([
+            $payResult = $this->api->paymentPay([
 //                'agent_transaction_id' => $this->agent_transaction_id
                 'agent_transaction_id' => $post['agent_transaction_id'],
             ]);
@@ -109,9 +106,6 @@ class PaymentController extends MainController
 //            return Response::error('Запрос должен содержать обязательные параметры: agent_transaction_id, account, amount.');
 //        }
 
-        /** @var Api $api */
-        $api = $this->api;
-
         $params = [
             'service_id' => Yii::$app->params['service_id'],
             'account' =>  'bowfnadenoc1972',
@@ -132,17 +126,17 @@ class PaymentController extends MainController
 //        ];
 //        d::ajax($params);
 
-        $checkResult = $api->paymentCheck($params);
+        $checkResult = $this->api->paymentCheck($params);
 //        return $checkResult;
 
-//        $payResult = $api->paymentPay([
+//        $payResult = $this->api->paymentPay([
 //            'agent_transaction_id' => $this->agent_transaction_id
 //        ]);
 //        return $payResult;
 
         // Если check успешен
         if (is_array($checkResult) AND isset($checkResult['success']) AND $checkResult['success']) {
-            $payResult = $api->paymentPay([
+            $payResult = $this->api->paymentPay([
                 'agent_transaction_id' => $this->agent_transaction_id
 //                'agent_transaction_id' => $post['agent_transaction_id'],
             ]);
@@ -168,10 +162,7 @@ class PaymentController extends MainController
      */
     public function actionCheckStatus()
     {
-        /** @var Api $api */
-        $api = $this->api;
-
-        return $api->checkStatus([
+        return $this->api->checkStatus([
             'agent_transaction_id' => $this->agent_transaction_id,
         ]);
     }

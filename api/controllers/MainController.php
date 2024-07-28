@@ -11,6 +11,7 @@ use yii\rest\Controller;
 
 class MainController extends Controller
 {
+    /** @var Api $api */
     public $api = null;
     public $notFound404 = '404 not found';
 
