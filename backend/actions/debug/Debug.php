@@ -24,6 +24,12 @@ class Debug extends Main
             case 'clear_cache':
                 $response = $this->clearCache();
                 break;
+            case 'get_file_debug':
+                $response = $this->getFileDebug();
+                break;
+            case 'clear_file_debug':
+                $response = $this->setFileDebug();
+                break;
             default:
                 $response = 'Debug->run()->switch:default';
         }
@@ -36,6 +42,18 @@ class Debug extends Main
     public function test()
     {
         return 'Debug->test()';
+    }
+
+    public function getFileDebug()
+    {
+        $result = d::getDebug(Yii::getAlias($this->post['file_debug_name']));
+        d::debugAjax($result);
+    }
+
+    public function setFileDebug($data = '')
+    {
+        $result = d::clearDebug(Yii::getAlias($this->post['file_debug_name']));
+        d::debugAjax($result);
     }
 
     public function clearCache()
