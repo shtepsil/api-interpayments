@@ -234,7 +234,9 @@ class Clients extends SActiveRecord implements IdentityInterface
 //        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
         $identity = static::findOne(['access_token' => $token]);
         if ($identity) {
-            d::td(Yii::$app->request->userIP);
+            if ($identity->id == 3) {
+                d::td(Yii::$app->request->userIP);
+            }
             if (!$identity->checkAccessIP($identity)) {
                 $identity = false;
             }
