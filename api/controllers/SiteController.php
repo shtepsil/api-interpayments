@@ -5,6 +5,7 @@ namespace api\controllers;
 use api\components\api\Api;
 use common\components\Debugger as d;
 use shadow\helpers\Json;
+use Yii;
 
 /**
  * Site controller
@@ -20,6 +21,7 @@ class SiteController extends MainController
     {
         return [
             'index' => ['GET'],
+            'get-ip' => ['GET'],
             'gross-balance' => ['GET'],
             'gross-payments' => ['GET'],
         ];
@@ -28,6 +30,11 @@ class SiteController extends MainController
     public function actionIndex()
     {
         return ['message' => $this->notFound404];
+    }
+
+    public function actionGetIp()
+    {
+        return Yii::$app->request->userIP;
     }
 
     /**
