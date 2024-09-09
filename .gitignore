@@ -1,5 +1,6 @@
 # yii console commands
 /yii
+/yii.bat
 /yii_test
 /yii_test.bat
 
@@ -42,7 +43,8 @@ phpunit.phar
 /backend/web/index-test.php
 /backend/web/robots.txt
 
-/z-notices
+/_old
+/z-notes
 *.zip
 *.rar
 
