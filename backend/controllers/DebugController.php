@@ -21,6 +21,7 @@ class DebugController extends MainController
                 'actions' => [
                     'debug' => 'debug\\Debug',
                     'migrations' => 'debug\\Migrations',
+                    'logs' => 'debug\\Logs',
                 ],
             ],
         ];

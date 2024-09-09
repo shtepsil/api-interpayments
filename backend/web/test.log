@@ -1,0 +1,23 @@
+2024-07-28 19:54:21 [127.0.0.1][-][-][error][backend\actions\debug\Logs::test] Тест лога
+    in E:\ospanel\domains\api-interpayments\backend\actions\debug\Logs.php:36
+    in E:\ospanel\domains\api-interpayments\backend\actions\debug\Logs.php:22
+    in E:\ospanel\domains\api-interpayments\backend\actions\TabsAjaxActions.php:26
+2024-07-28 19:54:21 [127.0.0.1][-][-][info][application] $_GET = [
+    'a' => 'logs'
+]
+
+$_POST = [
+    'action' => 'logs'
+    'type' => 'test_logs'
+    'url' => '/admin/tab-debug-ajax?a=logs'
+    '_csrf-backend' => 'vCbLikL3cYB46sF8Ks7__c3PJ5rwh4VzjqVOVWJbEkDKX5G5e9okyh2fpglGmpzJvaxGqYTd6kK21yR4Ty8rOA=='
+]
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => '18be20a8ce7ec9a4503f00a353c8351509ddf140ddf800806232b616ab4ef97ba:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"vyZ39-UJeugulTc4pca3tZo18rj--t9x\";}'
+]
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+

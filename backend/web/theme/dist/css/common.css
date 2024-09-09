@@ -1,4 +1,8 @@
 /* Главные стили формы админки */
+[class*=res-] pre {
+    background: transparent;
+    color: #c25959;
+}
 .wrapper {
     position: relative;
 }

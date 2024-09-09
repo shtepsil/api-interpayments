@@ -1,9 +1,6 @@
 <?php
 
 use yii\bootstrap\BootstrapAsset;
-use yii\web\JqueryAsset;
-use yii\web\YiiAsset;
-use yii\widgets\ActiveFormAsset;
 
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
@@ -20,6 +17,9 @@ return [
 //    'defaultRoute' => 'clients/index',// Не правильно срабатывает
 //    'catchAll' => ['site/offline'],// Сработал, только page 404, надо разбираться.
     'modules' => [],
+    'aliases' => [
+        '@logs' => '@runtime/logs',
+    ],
     'components' => [
         'debugger' => [
             'class' => \common\components\Debugger::class,
@@ -40,9 +40,21 @@ return [
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
-                [
-                    'class' => \yii\log\FileTarget::class,
-                    'levels' => ['error', 'warning'],
+//                'file' => [
+//                    'class' => \yii\log\FileTarget::class,
+//                    'levels' => ['error', 'warning'],
+//                    'except' => [
+//                        'backend\actions\debug\Logs*',
+//                    ],
+//                ],
+                'requests' => [
+                    'class' => \backend\components\log\CustomFileTarget::class,
+//                    'class' => \backend\components\log\CustomDbTarget::class,
+                    'levels' => ['info', 'error'],
+                    'categories' => [
+                        'backend\actions\debug\Logs*',
+                    ],
+                    'logVars' => ['_GET', '_POST', '_FILES', '_COOKIE'],
                 ],
             ],
         ],

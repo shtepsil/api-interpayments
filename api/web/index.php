@@ -1,5 +1,10 @@
 <?php
 
+//header("Content-type: application/json");
+//echo json_encode($_POST, 256);
+//echo json_encode($_SERVER, 256);
+//exit();
+
 defined('YII_DEBUG') or define('YII_DEBUG', true);
 defined('YII_ENV') or define('YII_ENV', 'dev');
 

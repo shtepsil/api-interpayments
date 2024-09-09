@@ -28,7 +28,7 @@ class m240708_171626_create_white_list_table extends Migration
             'updated_at' => $this->integer(11)->null()->defaultValue(NULL),
         ]);
 
-        // add foreign key for table `user`
+        // add foreign key for table `white_list`
         $this->addForeignKey(
             'fk-white_list-client_id',
             'white_list',
@@ -37,6 +37,7 @@ class m240708_171626_create_white_list_table extends Migration
             'id',
             'CASCADE'
         );
+//        $this->dropForeignKey();
     }
 
     /**

@@ -36,7 +36,7 @@ class WhiteList extends SActiveRecord
         return [
             [['client_id', 'created_at', 'updated_at'], 'integer'],
             [['ip'], 'string', 'max' => 255],
-            [['ip'], 'unique', 'message' => 'Такой IP адрес уже существует'],
+//            [['ip'], 'unique', 'message' => 'Такой IP адрес уже существует'],
             [['client_id'], 'exist', 'skipOnError' => true, 'targetClass' => Clients::class, 'targetAttribute' => ['client_id' => 'id']],
         ];
     }

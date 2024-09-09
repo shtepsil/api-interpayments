@@ -4,7 +4,10 @@ namespace api\controllers;
 
 use api\components\api\Api;
 use api\components\Response;
+use backend\components\log\LogUserId;
+use common\models\ClientTransactions;
 use Yii;
+use yii\db\Exception;
 
 class PaymentController extends MainController
 {
@@ -21,7 +24,7 @@ class PaymentController extends MainController
 //            'pay' => ['POST'],
             'check-status' => ['POST'],
             'check-and-pay' => ['POST'],
-            'check-and-payy' => ['GET'],
+            'check-and-payy' => ['POST'],
         ];
     }
 
@@ -45,58 +48,137 @@ class PaymentController extends MainController
      * Этот id не повторяется, и каждая новая операция должна сопровождаться новым id.
      *
      * @return string[]
+     * @throws Exception
      */
     public function actionCheckAndPay()
     {
         $post = Yii::$app->request->post();
 //        return $post;
 
-        if (
-            !isset($post['agent_transaction_id'])
-            OR !isset($post['account'])
-            OR !isset($post['amount'])
-        ) {
-            return Response::error('Запрос должен содержать обязательные параметры: agent_transaction_id, account, amount.');
-        }
+        if (!Yii::$app->user->isGuest) {
 
-        $checkResult = $this->api->paymentCheck([
-            'service_id' => Yii::$app->params['service_id'],
-            'account' =>  $post['account'],
-//            'agent_transaction_id' => $this->agent_transaction_id,
-            'agent_transaction_id' => $post['agent_transaction_id'],
-//            'amount' => 0.30,
-            'amount' => $post['amount'],
-        ]);
+            $client_id = Yii::$app->user->id;
 
-//        return $checkResult;
-
-        // Если check успешен
-        if (is_array($checkResult) AND isset($checkResult['success']) AND $checkResult['success']) {
-            $payResult = $this->api->paymentPay([
-//                'agent_transaction_id' => $this->agent_transaction_id
-                'agent_transaction_id' => $post['agent_transaction_id'],
-            ]);
-
-            // Если pay успешен
-            if ($payResult['success']) {
-                return Response::success($payResult);
-            } else {
-                //# если pay вернул ошибку
-                return Response::error($payResult);
+            if (
+                !isset($post['agent_transaction_id'])
+                OR !isset($post['account'])
+                OR !isset($post['amount'])
+            ) {
+                return Response::error('Запрос должен содержать обязательные параметры: agent_transaction_id, account, amount.');
             }
 
+            $paramsPaymentCheck = [
+                'service_id' => Yii::$app->params['service_id'],
+                'account' =>  $post['account'],
+                'agent_transaction_id' => $post['agent_transaction_id'],
+                'amount' => $post['amount'],
+            ];
+
+            $checkResult = $this->api->paymentCheck($paramsPaymentCheck);
+
+            // Если check успешен
+            if (is_array($checkResult) AND isset($checkResult['success']) AND $checkResult['success']) {
+
+                LogUserId::info([
+                    'client_id' => $client_id,
+                    'message' => 'Запрос paymentCheck(params) успешен',
+                    'params' => $paramsPaymentCheck,
+                    'response_message' => $checkResult,
+                ], __METHOD__, $client_id);
+
+                $paramsPaymentPay = [
+                    'agent_transaction_id' => $post['agent_transaction_id'],
+                ];
+
+                $payResult = $this->api->paymentPay($paramsPaymentPay);
+
+                // Если pay успешен
+                if ($payResult['success']) {
+
+                    LogUserId::info([
+                        'client_id' => $client_id,
+                        'message' => 'Запрос paymentPay(params) успешен',
+                        'params' => $paramsPaymentPay,
+                        'response_message' => $payResult,
+                    ], __METHOD__, $client_id);
+
+                    // Добавим транзакцию в таблицу транзакций
+                    $clientTransaction = new ClientTransactions();
+/*
+                    $paymentCheckParams = [
+                        'service_id' => Yii::$app->params['service_id'],
+                        'account' =>  $post['account'],
+                        'agent_transaction_id' => $post['agent_transaction_id'],
+                        'amount' => $post['amount'],
+                    ];
+*/
+                    $clientTransaction->service_id = Yii::$app->params['service_id'];
+                    $clientTransaction->client_id = $client_id;
+                    $clientTransaction->account = $post['account'];
+                    $clientTransaction->agent_transaction_id = $post['agent_transaction_id'];
+                    $clientTransaction->amount = $post['amount'];
+                    $clientTransaction->save();
+
+                    // Пока решено сделать без вот этой проверки.
+//                    if (!$clientTransaction->save()) {
+//
+//                        LogUserId::info([
+//                            'client_id' => $client_id,
+//                            'message' => 'Ошибка запроса paymentPay(...)',
+//                            'response_message' => $payResult,
+//                            'params' => $paymentPayParams
+//                        ], __METHOD__, $client_id);
+//
+//                        return Response::error('Incorrect data');
+//                    }
+
+                    return Response::success($payResult);
+
+                } else {
+
+                    LogUserId::info([
+                        'client_id' => $client_id,
+                        'message' => 'Ошибка запроса paymentPay(params)',
+                        'response_message' => $payResult,
+                        'params' => $paramsPaymentPay,
+                    ], __METHOD__, $client_id);
+
+                    //# если pay вернул ошибку
+                    return Response::error($payResult);
+                }
+
+            } else {
+
+                LogUserId::info([
+                    'client_id' => $client_id,
+                    'message' => 'Ошибка запроса paymentCheck(params)',
+                    'params' => $paramsPaymentCheck,
+                    'response_message' => $checkResult,
+                ], __METHOD__, $client_id);
+
+                //# если check вернул ошибку
+                return Response::error($checkResult);
+            }
         } else {
-            //# если check вернул ошибку
-            return Response::error($checkResult);
+            return Response::error('Unauthorized. Your request was made with invalid credentials.');
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public function actionCheckAndPayy()
     {
+//        $d = Yii::$app->request->getBodyParams();
+//        return $d;
         $post = Yii::$app->request->post();
-//        return $post;
+        return $post;
         $get = Yii::$app->request->get();
 //        return $get;
+
+        if (!Yii::$app->user->isGuest) {
+            $client_id = Yii::$app->user->id;
+
 
 //        if (
 //            !isset($post['agent_transaction_id'])
@@ -106,27 +188,24 @@ class PaymentController extends MainController
 //            return Response::error('Запрос должен содержать обязательные параметры: agent_transaction_id, account, amount.');
 //        }
 
-        $params = [
-            'service_id' => Yii::$app->params['service_id'],
-            'account' =>  'bowfnadenoc1972',
-            'agent_transaction_id' => $this->agent_transaction_id,
-            'amount' => 0,
-        ];
-//        $params = [
-//            'service_id' => Yii::$app->params['service_id'],
-//            'account' =>  $post['account'],
-//            'agent_transaction_id' => $post['agent_transaction_id'],
-//            'amount' => $post['amount'],
-//        ];
-//        $params = [
-//            'service_id' => Yii::$app->params['service_id'],
-//            'account' =>  $get['account'],
-//            'agent_transaction_id' => $get['agent_transaction_id'],
-//            'amount' => $get['amount'],
-//        ];
+//            $paramsPaymentCheck = [
+//                'service_id' => Yii::$app->params['service_id'],
+//                'account' =>  'bowfnadenoc1972',
+//                'agent_transaction_id' => $this->agent_transaction_id,
+//                'amount' => 0,
+//            ];
+            $paramsPaymentCheck = [
+                'service_id' => Yii::$app->params['service_id'],
+                'account' =>  $post['account'],
+            ];
+            $paramsPaymentCheck['agent_transaction_id'] = $post['agent_transaction_id'];
+            $paramsPaymentCheck['amount'] = $post['amount'];
+//            $paramsPaymentCheck['agent_transaction_id'] = $get['agent_transaction_id'];
+//            $paramsPaymentCheck['amount'] = $get['amount'];
+
 //        d::ajax($params);
 
-        $checkResult = $this->api->paymentCheck($params);
+            $checkResult = $this->api->paymentCheck($paramsPaymentCheck);
 //        return $checkResult;
 
 //        $payResult = $this->api->paymentPay([
@@ -134,25 +213,74 @@ class PaymentController extends MainController
 //        ]);
 //        return $payResult;
 
-        // Если check успешен
-        if (is_array($checkResult) AND isset($checkResult['success']) AND $checkResult['success']) {
-            $payResult = $this->api->paymentPay([
-                'agent_transaction_id' => $this->agent_transaction_id
-//                'agent_transaction_id' => $post['agent_transaction_id'],
-            ]);
+            // Если check успешен
+            if (is_array($checkResult) AND isset($checkResult['success']) AND $checkResult['success']) {
 
-            // Если pay успешен
-            if ($payResult['success']) {
-                return Response::success($payResult);
+                LogUserId::info([
+                    'client_id' => $client_id,
+                    'message' => 'Запрос paymentCheck(params) успешен',
+                    'params' => $paramsPaymentCheck,
+                    'response_message' => $checkResult,
+                ], __METHOD__, $client_id);
+
+                $paramsPaymentPay = [
+                    'agent_transaction_id' => $this->agent_transaction_id
+//                'agent_transaction_id' => $post['agent_transaction_id'],
+                ];
+
+                $payResult = $this->api->paymentPay($paramsPaymentPay);
+
+                // Если pay успешен
+                if ($payResult['success']) {
+
+                    LogUserId::info([
+                        'client_id' => $client_id,
+                        'message' => 'Запрос paymentPay(params) успешен',
+                        'params' => $paramsPaymentPay,
+                        'response_message' => $payResult,
+                    ], __METHOD__, $client_id);
+
+                    // Добавим транзакцию в таблицу транзакций
+                    $clientTransaction = new ClientTransactions();
+
+                    $clientTransaction->service_id = Yii::$app->params['service_id'];
+                    $clientTransaction->client_id = $client_id;
+                    $clientTransaction->account = $post['account'];
+                    $clientTransaction->agent_transaction_id = $post['agent_transaction_id'];
+                    $clientTransaction->amount = $post['amount'];
+                    $clientTransaction->save();
+
+                    return Response::success($payResult);
+                } else {
+
+                    LogUserId::info([
+                        'client_id' => $client_id,
+                        'message' => 'Ошибка запроса paymentPay(params)',
+                        'response_message' => $payResult,
+                        'params' => $paramsPaymentPay,
+                    ], __METHOD__, $client_id);
+
+                    //# если pay вернул ошибку
+                    return Response::error($payResult);
+                }
+
             } else {
-                //# если pay вернул ошибку
-                return Response::error($payResult);
+
+                LogUserId::info([
+                    'client_id' => $client_id,
+                    'message' => 'Ошибка запроса paymentCheck(params)',
+                    'params' => $paramsPaymentCheck,
+                    'response_message' => $checkResult,
+                ], __METHOD__, $client_id);
+
+                //# если check вернул ошибку
+                return Response::error($checkResult);
             }
 
         } else {
-            //# если check вернул ошибку
-            return Response::error($checkResult);
+            return Response::error('Unauthorized. Your request was made with invalid credentials.');
         }
+
     }
 
     /**

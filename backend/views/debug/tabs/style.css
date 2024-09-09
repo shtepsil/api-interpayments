@@ -60,7 +60,7 @@
     position: absolute;
     top: -77px;
 }
-.wrap-debug button, [class=*btn]{
+.wrap-debug button, [class*=btn]{
     border: 0;
     cursor: pointer;
 }

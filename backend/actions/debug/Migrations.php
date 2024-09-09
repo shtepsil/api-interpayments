@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use Yii;
 use yii\helpers\Url;
 use backend\components\migration\m240708_171626_create_white_list_table;
+use backend\components\migration\m240807_132415_create_client_transactions_table;
 
 class Migrations extends Main
 {
@@ -45,6 +46,7 @@ class Migrations extends Main
     public function migrationsRun()
     {
         $this->createTableWhiteList();
+        $this->createTableClientTransactions();
         return false;
     }
 
@@ -55,6 +57,21 @@ class Migrations extends Main
     {
         $table = Yii::$app->db->schema->getTableSchema('{{%white_list}}');
         $migration = new m240708_171626_create_white_list_table();
+        if (!$table) {
+            $migration->safeUp();
+        } else {
+//            $migration->safeDown();
+        }
+        return false;
+    }
+
+    /**
+     * @return false
+     */
+    public function createTableClientTransactions()
+    {
+        $table = Yii::$app->db->schema->getTableSchema('{{%client_transactions}}');
+        $migration = new m240807_132415_create_client_transactions_table();
         if (!$table) {
             $migration->safeUp();
         } else {

@@ -14,15 +14,7 @@ use yii\bootstrap\Html;
 
             <div class="form-gorup">
                 <div class="mini-form">
-                    <button name="btn_push" class="btn btn-sm btn-primary">Нажать->test()</button>
-                    &nbsp;&nbsp;&nbsp;
-                </div>
-            </div>
-            <br>
-            <div class="form-gorup">
-                <div class="mini-form">
-                    <div class="h4 tab-header">Запуск всех миграций вручную</div>
-                    <button name="migrations_run" class="btn btn-sm btn-primary">Запустить миграции</button>
+                    <button name="test_logs" class="btn btn-sm btn-primary">Нажать</button>
                     &nbsp;&nbsp;&nbsp;
                 </div>
             </div>
@@ -33,7 +25,7 @@ use yii\bootstrap\Html;
 </div>
 <br><br>
 <?php
-$action = 'migrations';
+$action = 'logs';
 $this->registerJs(<<<JS
 //JS
 $(function(){});
