@@ -15,6 +15,8 @@ class AppAsset extends AssetBundle
         // <!-- Morris Charts CSS -->
         'vendors/bower_components/morris.js/morris.css',
 //        'vendors/bower_components/datatables/media/css/jquery.dataTables.min.css',
+        // switchery CSS
+		'vendors/bower_components/switchery/dist/switchery.min.css',
         // <!-- Data table CSS -->
         'vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css',
         // Sweet-Alert
@@ -33,6 +35,8 @@ class AppAsset extends AssetBundle
         'vendors/bower_components/bootstrap/dist/js/bootstrap.min.js',
         // Data table JavaScript
         'vendors/bower_components/datatables/media/js/jquery.dataTables.min.js',
+        // Switchery JavaScript
+        'vendors/bower_components/switchery/dist/switchery.min.js',
         // Slimscroll JavaScript
         'dist/js/jquery.slimscroll.js',
         // simpleWeather JavaScript

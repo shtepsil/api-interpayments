@@ -2,6 +2,7 @@
 
 namespace backend\actions\debug;
 
+use backend\components\migration\m240909_224722_add_check_ip_column_to_clients_table;
 use common\components\Debugger as d;
 use common\models\User as ModelUser;
 use InvalidArgumentException;
@@ -47,6 +48,7 @@ class Migrations extends Main
     {
         $this->createTableWhiteList();
         $this->createTableClientTransactions();
+        $this->addCheckIpColumnToClientsTable();
         return false;
     }
 
@@ -73,6 +75,18 @@ class Migrations extends Main
         $table = Yii::$app->db->schema->getTableSchema('{{%client_transactions}}');
         $migration = new m240807_132415_create_client_transactions_table();
         if (!$table) {
+            $migration->safeUp();
+        } else {
+//            $migration->safeDown();
+        }
+        return false;
+    }
+
+    public function addCheckIpColumnToClientsTable()
+    {
+        $table = Yii::$app->db->schema->getTableSchema('{{%clients}}');
+        $migration = new m240909_224722_add_check_ip_column_to_clients_table();
+        if (!$table->getColumn('check_ip')) {
             $migration->safeUp();
         } else {
 //            $migration->safeDown();
