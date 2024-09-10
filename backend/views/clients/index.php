@@ -50,9 +50,9 @@ $this->title = 'Список клиентов';
                                     <col>
                                     <col>
                                     <col width="395">
-                                    <col width="80">
                                     <col>
                                     <col>
+                                    <col width="110">
                                     <col width="110">
                                 </colgroup>
                                 <thead>
@@ -60,9 +60,9 @@ $this->title = 'Список клиентов';
                                     <th>Имя клиента(аккаунта)</th>
                                     <th>Описание</th>
                                     <th>Токен</th>
-                                    <th>Что то</th>
                                     <th>Дата регистрации</th>
                                     <th>Баланс</th>
+                                    <th>Проверка IP</th>
                                     <th>Действия</th>
                                 </tr>
                                 </thead>
@@ -93,9 +93,19 @@ $this->title = 'Список клиентов';
                                             </div>
 
                                         </td>
-                                        <td></td>
                                         <td><?= date('d.m.Y', $client->created_at)?></td>
                                         <td></td>
+                                        <td class="text-center td-check-ip">
+                                            <?if ($client->check_ip) :?>
+                                                <span class="text-success">
+                                                    <i class="fa fa-check"></i>
+                                                </span>
+                                            <? else :?>
+                                                <span class="text-danger">
+                                                    <i class="fa fa-times"></i>
+                                                </span>
+                                            <?endif?>
+                                        </td>
                                         <td class="td-actions">
                                             <div class="edit"><a href="<?= Url::to(['clients/control', 'id' => $client->id])?>"><i class="zmdi zmdi-edit txt-warning"></i></a></div>
                                             <div class="delete"><i class="zmdi zmdi-delete txt-danger client-remove" data-id="<?= $client->id?>"></i></div>

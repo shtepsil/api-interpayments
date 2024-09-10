@@ -109,3 +109,9 @@ window.send = (url, params, details) => {
         }
     });
 };
+
+$(document).ready(function () {
+    $('.js-switch-1').each(function () {
+        new Switchery($(this)[0], $(this).data());
+    });
+});

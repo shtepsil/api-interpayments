@@ -11,6 +11,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use yii\web\View;
 
 /**
  * Clients model
@@ -29,6 +30,7 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ * @property string $check_ip
  */
 class Clients extends SActiveRecord implements IdentityInterface
 {
@@ -81,6 +83,7 @@ class Clients extends SActiveRecord implements IdentityInterface
             [['name', 'description', 'access_token'], 'default', 'value' => NULL],
             [['name', 'description'], 'string', 'max' => 255],
             [['access_token'], 'string', 'max' => 32],
+            [['check_ip'], 'default', 'value' => 0],
         ];
     }
 
@@ -131,6 +134,25 @@ class Clients extends SActiveRecord implements IdentityInterface
                     'icon' => 'suitcase',
                     'options' => [],
                     'fields' => [
+                        'check_ip' => [
+                            'title' => 'Проверка запросов на IP',
+//                            'type' => 'render',
+//                            'render' => [
+//                                'view' => 'switcher_check_ip',
+//                                'params' => [
+//                                    'check_ip' => $this->check_ip,
+//                                ],
+//                            ],
+                            'type' => 'checkbox',
+                            'field_options' => [
+                                'template' => Yii::$app->controller->renderPartial('switcher_check_ip'),
+                            ],
+                            'params' => [
+                                'class' => 'js-switch js-switch-1',
+                                'data-color' => '#469408',
+                                'data-secondary-color' => '#dc4666','data-size' => 'small'
+                            ],
+                        ],
                         'ips' => [
                             'title' => 'Список разрешённых<br>IP адресов ',
                             'type' => 'render',
@@ -150,21 +172,6 @@ class Clients extends SActiveRecord implements IdentityInterface
                 ],
             ]
         ];
-
-//        if ($this->isNewRecord) {
-//            $this->scenario = Clients::SCENARIO_NEW_CLIENT;
-//            $result['groups']['main']['fields']['password'] = [
-//                'title' => 'Пароль',
-//                'type' => 'password',
-//                'field_options' => [
-//                    'template' => Yii::$app->controller->renderPartial('field_password'),
-//                    'inputOptions' => [
-//                        'placeholder' => 'Придумайте новый пароль',
-//                        'autocomplete' => 'off'
-//                    ]
-//                ],
-//            ];
-//        }
 
         return $result;
     }
@@ -187,17 +194,15 @@ class Clients extends SActiveRecord implements IdentityInterface
     }
 
     /**
-     *
-     * @param $identity
      * @return bool
      */
-    public function checkAccessIP($identity)
+    public function checkAccessIP()
     {
 //        d::ajax(Yii::$app->request->userIP);
         $access = false;
         $ips = WhiteList::find()
             ->select('ip')
-            ->where(['client_id' => $identity->id])
+            ->where(['client_id' => $this->id])
             ->indexBy('ip')->asArray()->all();
 
 //        d::ajax([
@@ -231,16 +236,14 @@ class Clients extends SActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-//        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
         $identity = static::findOne(['access_token' => $token]);
+
         if ($identity) {
-            if ($identity->id == 3) {
-                d::td(Yii::$app->request->userIP);
-            }
-            if (!$identity->checkAccessIP($identity)) {
+            if ($identity->check_ip == '1' AND !$identity->checkAccessIP()) {
                 $identity = false;
             }
         }
+
         return $identity;
     }
 
