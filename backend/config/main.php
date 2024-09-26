@@ -18,7 +18,7 @@ return [
 //    'catchAll' => ['site/offline'],// Сработал, только page 404, надо разбираться.
     'modules' => [],
     'aliases' => [
-        '@logs' => '@runtime/logs',
+        '@logs' => '@backend/runtime/logs',
     ],
     'components' => [
         'debugger' => [

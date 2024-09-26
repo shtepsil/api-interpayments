@@ -11,6 +11,9 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'debugger'],
     'controllerNamespace' => 'api\controllers',
+    'aliases' => [
+        '@logs' => '@api/runtime/logs',
+    ],
     'components' => [
         'debugger' => [
             'class' => \common\components\Debugger::class,
@@ -44,9 +47,22 @@ return [
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
-                [
-                    'class' => \yii\log\FileTarget::class,
-                    'levels' => ['error', 'warning'],
+//                'file' => [
+//                    'class' => \yii\log\FileTarget::class,
+//                    'levels' => ['error', 'warning'],
+//                    'except' => [
+//                        'backend\actions\debug\Logs*',
+//                    ],
+//                ],
+                'requests' => [
+                    'class' => \backend\components\log\CustomFileTarget::class,
+//                    'class' => \backend\components\log\CustomDbTarget::class,
+                    'levels' => ['info', 'error'],
+                    'categories' => [
+                        'backend\actions\debug\Logs*',
+                        'api\controllers\PaymentController*',
+                    ],
+                    'logVars' => ['_GET', '_POST', '_FILES', '_COOKIE'],
                 ],
             ],
         ],

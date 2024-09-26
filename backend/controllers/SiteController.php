@@ -6,6 +6,7 @@ use common\models\LoginForm;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 use yii\web\Response;
 
 /**
@@ -61,7 +62,7 @@ class SiteController extends MainController
      */
     public function actionIndex()
     {
-        return $this->redirect('clients/index');
+        return $this->redirect(Url::to(['clients/index']));
 //        return $this->render('index');
     }
 

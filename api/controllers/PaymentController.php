@@ -24,6 +24,7 @@ class PaymentController extends MainController
 //            'pay' => ['POST'],
             'check-status' => ['POST'],
             'check-and-pay' => ['POST'],
+            // Тестовый action
             'check-and-payy' => ['POST'],
         ];
     }
@@ -80,6 +81,7 @@ class PaymentController extends MainController
             if (is_array($checkResult) AND isset($checkResult['success']) AND $checkResult['success']) {
 
                 LogUserId::info([
+                    'type' => 'info',
                     'client_id' => $client_id,
                     'message' => 'Запрос paymentCheck(params) успешен',
                     'params' => $paramsPaymentCheck,
@@ -96,6 +98,7 @@ class PaymentController extends MainController
                 if ($payResult['success']) {
 
                     LogUserId::info([
+                        'type' => 'info',
                         'client_id' => $client_id,
                         'message' => 'Запрос paymentPay(params) успешен',
                         'params' => $paramsPaymentPay,
@@ -104,14 +107,7 @@ class PaymentController extends MainController
 
                     // Добавим транзакцию в таблицу транзакций
                     $clientTransaction = new ClientTransactions();
-/*
-                    $paymentCheckParams = [
-                        'service_id' => Yii::$app->params['service_id'],
-                        'account' =>  $post['account'],
-                        'agent_transaction_id' => $post['agent_transaction_id'],
-                        'amount' => $post['amount'],
-                    ];
-*/
+
                     $clientTransaction->service_id = Yii::$app->params['service_id'];
                     $clientTransaction->client_id = $client_id;
                     $clientTransaction->account = $post['account'];
@@ -136,7 +132,8 @@ class PaymentController extends MainController
 
                 } else {
 
-                    LogUserId::info([
+                    LogUserId::error([
+                        'type' => 'error',
                         'client_id' => $client_id,
                         'message' => 'Ошибка запроса paymentPay(params)',
                         'response_message' => $payResult,
@@ -149,7 +146,8 @@ class PaymentController extends MainController
 
             } else {
 
-                LogUserId::info([
+                LogUserId::error([
+                    'type' => 'error',
                     'client_id' => $client_id,
                     'message' => 'Ошибка запроса paymentCheck(params)',
                     'params' => $paramsPaymentCheck,
@@ -169,12 +167,29 @@ class PaymentController extends MainController
      */
     public function actionCheckAndPayy()
     {
-//        $d = Yii::$app->request->getBodyParams();
-//        return $d;
-        $post = Yii::$app->request->post();
-        return $post;
-        $get = Yii::$app->request->get();
-//        return $get;
+
+        $log_body1 = [
+            'type' => 'info',
+            'client_id' => 24,
+            'message' => 'Запрос paymentCheck(params) успешен',
+            'params' => ['key' => 'value'],
+            'response_message' => ['message' => 'response'],
+        ];
+        $log_body2 = [
+            'type' => 'error',
+            'client_id' => 24,
+            'message' => 'Ошибка запроса paymentCheck(params)',
+            'params' => ['key' => 'value'],
+            'response_message' => ['message' => 'response'],
+        ];
+
+        $time = time();
+        LogUserId::info($log_body1, __METHOD__, 24);
+        LogUserId::info($log_body1, __METHOD__, 24);
+        LogUserId::error($log_body2, __METHOD__, 24);
+
+
+        return 'Лог записан';
 
         if (!Yii::$app->user->isGuest) {
             $client_id = Yii::$app->user->id;

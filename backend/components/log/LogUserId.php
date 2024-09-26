@@ -97,8 +97,9 @@ class LogUserId
         $targets = Yii::$app->log->targets;
         if ($user_id AND is_array($targets) AND count($targets)) {
             foreach ($targets as $target_key => $target) {
-                Yii::$app->log->targets[$target_key]->logFile =
-                    Yii::getAlias('@logs/' . $user_id . '/' . $logFile . '.log');
+                $targetLogFile = Yii::getAlias('@logs/' . $user_id . '/' . $logFile . '.log');
+//                d::ajax($targetLogFile);
+                Yii::$app->log->targets[$target_key]->logFile = $targetLogFile;
             }
         }
     }

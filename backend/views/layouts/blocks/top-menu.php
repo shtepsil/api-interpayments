@@ -308,7 +308,7 @@ use yii\helpers\Url;
                     <li class="divider"></li>
                     <li>
 <!--                        <a href="#"><i class="zmdi zmdi-power"></i><span>Log Out</span></a>-->
-                        <?= Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline form-logout'])
+                        <?= Html::beginForm(Url::to(['site/logout']), 'post', ['class' => 'form-inline form-logout'])
                             . Html::a('<i class="zmdi zmdi-power"></i><span>Выйти</span>', '#', ['class' => 'no-link'])
                             . Html::endForm()
                         ?>

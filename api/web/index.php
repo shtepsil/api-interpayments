@@ -1,6 +1,7 @@
 <?php
 
 //header("Content-type: application/json");
+//echo json_encode($_GET, 256);
 //echo json_encode($_POST, 256);
 //echo json_encode($_SERVER, 256);
 //exit();

@@ -112,8 +112,6 @@ class CustomFileTarget extends LoggerFile
 //        d::ajax($this->messages);
         $text = implode("\n", array_map([$this, 'formatMessage'], $this->messages)) . "\n";
 
-
-
         if (trim($text) === '') {
             return; // No messages to export, so we exit the function early
         }
